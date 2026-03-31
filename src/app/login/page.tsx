@@ -145,14 +145,14 @@ export default function Page() {
             </div>
             <div>
               <p className="text-muted-moss text-xs">ระบบ Telemedicine</p>
-              <p className="text-deep-emerald font-semibold">ศูนย์การแพทย์แผนไทย</p>
+              <p className="text-[#20211F] font-semibold">ศูนย์การแพทย์แผนไทย</p>
             </div>
           </div>
 
           {step === "role" ? (
             <>
               <div className="mb-8">
-                <h2 className="text-deep-emerald">เข้าสู่ระบบ</h2>
+                <h2 className="text-[#20211F]">เข้าสู่ระบบ</h2>
                 <p className="text-muted-moss text-sm mt-1">กรุณาเลือกประเภทผู้ใช้งาน</p>
               </div>
 
@@ -222,7 +222,7 @@ export default function Page() {
               )}
 
               <div className="mb-6">
-                <h2 className="text-deep-emerald">ยินดีต้อนรับ</h2>
+                <h2 className="text-[#20211F]">ยินดีต้อนรับ</h2>
                 <p className="text-muted-moss text-sm mt-1">กรอกชื่อผู้ใช้และรหัสผ่านเพื่อเข้าสู่ระบบ</p>
               </div>
 

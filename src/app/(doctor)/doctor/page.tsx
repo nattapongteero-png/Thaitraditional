@@ -86,7 +86,7 @@ export default function Page() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-deep-emerald">คิววันนี้</h2>
+          <h2 className="text-[#20211F]">คิววันนี้</h2>
           <p className="text-muted-moss text-sm mt-1">จันทร์ที่ 2 มีนาคม 2569</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-xl text-sm text-olive-charcoal hover:bg-pale-mint transition-colors shadow-sm">
@@ -98,7 +98,7 @@ export default function Page() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: "ทั้งหมด", value: stats.total, color: "text-deep-emerald", bg: "bg-white" },
+          { label: "ทั้งหมด", value: stats.total, color: "text-[#20211F]", bg: "bg-white" },
           { label: "รอพบแพทย์", value: stats.waiting, color: "text-amber-700", bg: "bg-amber-50", border: "border-amber-200" },
           { label: "เสร็จแล้ว", value: stats.done, color: "text-forest-leaf", bg: "bg-pale-mint", border: "border-pale-mint" },
           { label: "ไม่มา", value: stats.noShow, color: "text-red-700", bg: "bg-red-50", border: "border-red-200" },
@@ -194,7 +194,7 @@ export default function Page() {
                           />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-deep-emerald">{patient.name}</p>
+                          <p className="text-sm font-medium text-[#20211F]">{patient.name}</p>
                           <p className="text-xs text-muted-moss">{patient.age} ปี</p>
                         </div>
                       </div>
@@ -207,7 +207,7 @@ export default function Page() {
                     </td>
                     <td className="px-5 py-4">
                       <div>
-                        <p className="text-sm text-deep-emerald">{patient.time} น.</p>
+                        <p className="text-sm text-[#20211F]">{patient.time} น.</p>
                         {patient.status === "waiting" && (
                           <p className="text-xs text-amber-600">{patient.waitTime}</p>
                         )}

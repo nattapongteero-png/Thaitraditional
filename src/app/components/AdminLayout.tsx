@@ -83,7 +83,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     : "text-pale-mint hover:bg-white/10 hover:text-white"
                   }`}
               >
-                <Icon className="w-4 h-4 flex-shrink-0" />
+                <Icon className="w-5 h-5 flex-shrink-0" />
                 <span>{item.label}</span>
               </Link>
             );

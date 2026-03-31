@@ -108,7 +108,7 @@ function RescheduleContent() {
           <div className="w-24 h-24 bg-pale-mint rounded-full flex items-center justify-center mx-auto mb-5">
             <CheckCircle2 className="w-12 h-12 text-forest-leaf" />
           </div>
-          <h2 className="text-deep-emerald">เลื่อนนัดหมายสำเร็จ!</h2>
+          <h2 className="text-[#20211F]">เลื่อนนัดหมายสำเร็จ!</h2>
           <p className="text-muted-moss text-sm mt-2 max-w-xs mx-auto">
             ระบบจะส่งการยืนยันผ่าน SMS และอีเมลของท่านภายใน 5 นาที
           </p>
@@ -139,15 +139,15 @@ function RescheduleContent() {
             <div className="p-5">
               <p className="text-xs text-forest-leaf uppercase tracking-wider mb-3">นัดใหม่</p>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm text-deep-emerald">
+                <div className="flex items-center gap-2 text-sm text-[#20211F]">
                   <Stethoscope className="w-4 h-4 flex-shrink-0 text-forest-leaf" />
                   <span>{original.doctor}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-deep-emerald">
+                <div className="flex items-center gap-2 text-sm text-[#20211F]">
                   <CalendarIcon className="w-4 h-4 flex-shrink-0 text-forest-leaf" />
                   <span>{newDateLabel}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-deep-emerald">
+                <div className="flex items-center gap-2 text-sm text-[#20211F]">
                   <TimeCircleIcon className="w-4 h-4 flex-shrink-0 text-forest-leaf" />
                   <span>{selectedTime} น.</span>
                 </div>
@@ -191,7 +191,7 @@ function RescheduleContent() {
         </button>
 
         <div>
-          <h2 className="text-deep-emerald">ยืนยันการเลื่อนนัด</h2>
+          <h2 className="text-[#20211F]">ยืนยันการเลื่อนนัด</h2>
           <p className="text-muted-moss text-sm mt-1">ตรวจสอบข้อมูลก่อนยืนยัน</p>
         </div>
 
@@ -202,7 +202,7 @@ function RescheduleContent() {
               <Stethoscope className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="font-semibold text-deep-emerald">{original.doctor}</p>
+              <p className="font-semibold text-[#20211F]">{original.doctor}</p>
               <p className="text-sm text-muted-moss">{original.specialty}</p>
             </div>
           </div>
@@ -247,7 +247,7 @@ function RescheduleContent() {
           <div className="mt-4 flex items-center gap-3 p-3 bg-warm-sand rounded-xl">
             <VideoIcon className="w-4 h-4 text-muted-moss" />
             <span className="text-sm text-olive-charcoal flex-1">ประเภทการพบ</span>
-            <span className="text-sm font-medium text-deep-emerald">{original.type}</span>
+            <span className="text-sm font-medium text-[#20211F]">{original.type}</span>
           </div>
 
           {/* reason */}
@@ -301,7 +301,7 @@ function RescheduleContent() {
       </button>
 
       <div>
-        <h2 className="text-deep-emerald">เลื่อนนัดหมาย</h2>
+        <h2 className="text-[#20211F]">เลื่อนนัดหมาย</h2>
         <p className="text-muted-moss text-sm mt-1">เลือกวันและเวลาใหม่สำหรับการพบแพทย์</p>
       </div>
 
@@ -328,7 +328,7 @@ function RescheduleContent() {
             <Stethoscope className="w-5 h-5 text-blue-600" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-deep-emerald text-sm">{original.doctor}</p>
+            <p className="font-semibold text-[#20211F] text-sm">{original.doctor}</p>
             <p className="text-xs text-muted-moss">{original.specialty}</p>
           </div>
           <div className="text-right">
@@ -409,7 +409,7 @@ function RescheduleContent() {
 
         {/* Time Slots */}
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="mb-4 text-deep-emerald">เลือกเวลาใหม่</h4>
+          <h4 className="mb-4 text-[#20211F]">เลือกเวลาใหม่</h4>
           {selectedDay ? (
             <>
               <p className="text-xs text-muted-moss mb-3">
@@ -463,7 +463,7 @@ function RescheduleContent() {
 
       {/* Reason */}
       <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-        <h4 className="text-deep-emerald mb-3">เหตุผลในการเลื่อนนัด</h4>
+        <h4 className="text-[#20211F] mb-3">เหตุผลในการเลื่อนนัด</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {rescheduleReasons.map((r, i) => (
             <button

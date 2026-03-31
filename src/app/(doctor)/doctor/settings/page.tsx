@@ -73,7 +73,7 @@ export default function Page() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-xl text-deep-emerald">ตั้งค่า</h1>
+        <h1 className="text-xl text-[#20211F]">ตั้งค่า</h1>
         <p className="text-sm text-muted-moss mt-1">
           ปรับแต่งการทำงานของ Doctor Portal
         </p>

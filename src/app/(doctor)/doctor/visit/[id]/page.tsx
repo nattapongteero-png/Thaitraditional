@@ -112,7 +112,7 @@ export default function Page() {
                   <User className="w-8 h-8 text-blue-700" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-deep-emerald">{patient.name}</h3>
+                  <h3 className="text-[#20211F]">{patient.name}</h3>
                   <div className="flex flex-wrap gap-3 mt-2 text-sm text-olive-charcoal">
                     <span>HN: <strong>{patient.hn}</strong></span>
                     <span>อายุ: <strong>{patient.age} ปี</strong></span>
@@ -125,7 +125,7 @@ export default function Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-                <h4 className="text-deep-emerald mb-4">ข้อมูลทั่วไป</h4>
+                <h4 className="text-[#20211F] mb-4">ข้อมูลทั่วไป</h4>
                 <div className="space-y-2.5">
                   {[
                     { label: "วันเกิด", value: patient.dob },
@@ -136,14 +136,14 @@ export default function Page() {
                   ].map((row) => (
                     <div key={row.label} className="flex justify-between text-sm">
                       <span className="text-muted-moss">{row.label}</span>
-                      <span className="text-deep-emerald font-medium">{row.value}</span>
+                      <span className="text-[#20211F] font-medium">{row.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-                <h4 className="text-deep-emerald mb-4">ประวัติแพ้ยา / ข้อควรระวัง</h4>
+                <h4 className="text-[#20211F] mb-4">ประวัติแพ้ยา / ข้อควรระวัง</h4>
                 <div className="space-y-2">
                   {patient.allergies.map((allergy) => (
                     <div
@@ -162,7 +162,7 @@ export default function Page() {
             </div>
 
             <div className="bg-pale-mint border border-pale-mint rounded-xl p-4">
-              <p className="text-sm text-deep-emerald">
+              <p className="text-sm text-[#20211F]">
                 ✓ ข้อมูลผู้ป่วยถูกดึงจากระบบ EHP เรียบร้อยแล้ว กรุณายืนยันตัวตนผู้ป่วยก่อนดำเนินการต่อ
               </p>
             </div>
@@ -184,7 +184,7 @@ export default function Page() {
 
             {/* Vitals */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-4">ข้อมูล Vital Signs</h4>
+              <h4 className="text-[#20211F] mb-4">ข้อมูล Vital Signs</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: "ความดันโลหิต", key: "bp", unit: "mmHg", placeholder: "120/80" },
@@ -211,7 +211,7 @@ export default function Page() {
 
             {/* Chief Complaint */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-4">อาการสำคัญ (Chief Complaint)</h4>
+              <h4 className="text-[#20211F] mb-4">อาการสำคัญ (Chief Complaint)</h4>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
                 {["ปวดหัว/ไมเกรน", "ปวดกล้ามเนื้อ", "อ่อนเพลีย", "นอนไม่หลับ", "ระบบย่อยอาหาร", "ปัญหาผิวหนัง", "ปวดข้อ", "ภูมิแพ้", "อื่นๆ"].map((symptom) => (
                   <button
@@ -233,7 +233,7 @@ export default function Page() {
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-deep-emerald">ประเมินความเหมาะสม Telemedicine</h4>
+                  <h4 className="text-[#20211F]">ประเมินความเหมาะสม Telemedicine</h4>
                   <p className="text-sm text-muted-moss mt-0.5">ผู้ป่วยรายนี้เหมาะสมสำหรับการรักษาผ่าน Video หรือไม่?</p>
                 </div>
                 <div className="flex gap-2">
@@ -263,7 +263,7 @@ export default function Page() {
                 <div className="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <VideoIcon className="w-10 h-10 text-blue-600" />
                 </div>
-                <h3 className="text-deep-emerald">เริ่มการปรึกษาผ่านวิดีโอ</h3>
+                <h3 className="text-[#20211F]">เริ่มการปรึกษาผ่านวิดีโอ</h3>
                 <p className="text-muted-moss text-sm mt-2 mb-6">
                   ผู้ป่วย: {patient.name} · กำลังรอในห้องรอ
                 </p>
@@ -372,7 +372,7 @@ export default function Page() {
 
             {/* ICD-10 */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-3">รหัสโรค ICD-10-TM</h4>
+              <h4 className="text-[#20211F] mb-3">รหัสโรค ICD-10-TM</h4>
               <div className="flex gap-3">
                 <div className="flex-1">
                   <input
@@ -407,7 +407,7 @@ export default function Page() {
           <div className="space-y-5">
             {/* Medicines */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-4">รายการยาสมุนไพร</h4>
+              <h4 className="text-[#20211F] mb-4">รายการยาสมุนไพร</h4>
               <div className="space-y-2 mb-4">
                 {medicines.map((med, idx) => (
                   <div key={idx} className="flex items-center gap-3 bg-amber-50 border border-amber-100 rounded-xl p-3">
@@ -449,7 +449,7 @@ export default function Page() {
 
             {/* Procedures */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-3">หัตถการ (Procedures)</h4>
+              <h4 className="text-[#20211F] mb-3">หัตถการ (Procedures)</h4>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {["นวดแผนไทย", "ประคบสมุนไพร", "อบไอน้ำสมุนไพร", "รมยา", "กดจุด", "ไม่มี"].map((p) => (
                   <button
@@ -464,7 +464,7 @@ export default function Page() {
 
             {/* Instructions */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-3">คำแนะนำผู้ป่วย</h4>
+              <h4 className="text-[#20211F] mb-3">คำแนะนำผู้ป่วย</h4>
               <textarea
                 rows={4}
                 value={instructions}
@@ -491,7 +491,7 @@ export default function Page() {
         return (
           <div className="space-y-5">
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-              <h4 className="text-deep-emerald mb-4">สรุปค่าบริการ</h4>
+              <h4 className="text-[#20211F] mb-4">สรุปค่าบริการ</h4>
               <div className="space-y-3">
                 {[
                   { label: "ค่าปรึกษาแพทย์ (Consultation Fee)", amount: "500" },
@@ -500,11 +500,11 @@ export default function Page() {
                 ].map((item) => (
                   <div key={item.label} className="flex justify-between text-sm">
                     <span className="text-olive-charcoal">{item.label}</span>
-                    <span className="text-deep-emerald">฿{item.amount}</span>
+                    <span className="text-[#20211F]">฿{item.amount}</span>
                   </div>
                 ))}
                 <div className="border-t border-border pt-3 flex justify-between">
-                  <span className="font-semibold text-deep-emerald">รวมทั้งสิ้น</span>
+                  <span className="font-semibold text-[#20211F]">รวมทั้งสิ้น</span>
                   <span className="font-semibold text-forest-leaf text-lg">฿900.00</span>
                 </div>
               </div>
@@ -512,7 +512,7 @@ export default function Page() {
 
             {paymentStatus === "pending" && (
               <div className="bg-white border border-border rounded-2xl p-5 shadow-sm space-y-4">
-                <h4 className="text-deep-emerald">ช่องทางชำระเงิน</h4>
+                <h4 className="text-[#20211F]">ช่องทางชำระเงิน</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {["PromptPay / QR Code", "บัตรเครดิต/เดบิต", "Mobile Banking", "เงินสด (Onsite)"].map((m) => (
                     <button
@@ -543,7 +543,7 @@ export default function Page() {
             {paymentStatus === "paid" && (
               <div className="bg-pale-mint border border-emerald-300 rounded-2xl p-6 text-center">
                 <CheckCircle2 className="w-14 h-14 text-forest-leaf mx-auto mb-3" />
-                <h3 className="text-deep-emerald">ชำระเงินสำเร็จ</h3>
+                <h3 className="text-[#20211F]">ชำระเงินสำเร็จ</h3>
                 <p className="text-forest-leaf text-sm mt-1">฿900.00 · REF: PAY-20260302-0034</p>
                 <p className="text-forest-leaf text-xs mt-0.5">2 มี.ค. 2569 เวลา 10:45:23 น.</p>
               </div>
@@ -556,7 +556,7 @@ export default function Page() {
           <div className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-                <h4 className="text-deep-emerald mb-4">เอกสารที่จะสร้าง</h4>
+                <h4 className="text-[#20211F] mb-4">เอกสารที่จะสร้าง</h4>
                 <div className="space-y-3">
                   {[
                     { label: "ใบสรุปการรักษา (Visit Summary)", ready: true },
@@ -582,7 +582,7 @@ export default function Page() {
               </div>
 
               <div className="bg-white border border-border rounded-2xl p-5 shadow-sm">
-                <h4 className="text-deep-emerald mb-4">ลงนามดิจิทัล (MOPH CA)</h4>
+                <h4 className="text-[#20211F] mb-4">ลงนามดิจิทัล (MOPH CA)</h4>
                 {!signed ? (
                   <div className="space-y-4">
                     <div className="bg-warm-sand rounded-xl p-4 text-center">
@@ -609,7 +609,7 @@ export default function Page() {
                   <div className="space-y-4">
                     <div className="bg-pale-mint border border-pale-mint rounded-xl p-4 text-center">
                       <CheckCircle2 className="w-10 h-10 text-forest-leaf mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-deep-emerald">ลงนามสำเร็จ</p>
+                      <p className="text-sm font-semibold text-[#20211F]">ลงนามสำเร็จ</p>
                       <p className="text-xs text-forest-leaf mt-1">Timestamp: 2026-03-02T10:47:23Z</p>
                       <p className="text-xs text-forest-leaf">Hash: SHA256: a3f8b2...</p>
                     </div>
@@ -632,7 +632,7 @@ export default function Page() {
               <div className="flex items-center gap-3 mb-4">
                 <CheckCircle2 className="w-8 h-8 text-forest-leaf" />
                 <div>
-                  <h3 className="text-deep-emerald">Visit สำเร็จ</h3>
+                  <h3 className="text-[#20211F]">Visit สำเร็จ</h3>
                   <p className="text-sm text-forest-leaf">Encounter ID: ENC-20260302-0034</p>
                 </div>
               </div>
@@ -645,7 +645,7 @@ export default function Page() {
                 ].map((s) => (
                   <div key={s.label} className="bg-white/70 rounded-xl p-3">
                     <p className="text-xs text-forest-leaf">{s.label}</p>
-                    <p className="text-sm font-semibold text-deep-emerald mt-0.5">{s.value}</p>
+                    <p className="text-sm font-semibold text-[#20211F] mt-0.5">{s.value}</p>
                   </div>
                 ))}
               </div>
@@ -653,7 +653,7 @@ export default function Page() {
 
             {/* Notify Patient */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm space-y-3">
-              <h4 className="text-deep-emerald">แจ้งผู้ป่วย</h4>
+              <h4 className="text-[#20211F]">แจ้งผู้ป่วย</h4>
               <div className="space-y-2">
                 {[
                   { label: "ส่ง SMS สรุปผลการรักษา", checked: true },
@@ -674,7 +674,7 @@ export default function Page() {
 
             {/* Follow-up */}
             <div className="bg-white border border-border rounded-2xl p-5 shadow-sm space-y-3">
-              <h4 className="text-deep-emerald">นัดติดตามผล (Follow-up)</h4>
+              <h4 className="text-[#20211F]">นัดติดตามผล (Follow-up)</h4>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs text-muted-moss block mb-1">วันนัด</label>
@@ -767,7 +767,7 @@ export default function Page() {
       {/* Step Header — title only, no buttons */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-deep-emerald">
+          <h2 className="text-[#20211F]">
             Step {currentStep}: {STEPS[currentStep - 1].label}
           </h2>
           <p className="text-muted-moss text-sm mt-0.5">{currentStep} จาก 8 ขั้นตอน</p>

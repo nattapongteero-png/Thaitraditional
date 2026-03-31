@@ -105,7 +105,7 @@ export default function Page() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-deep-emerald">ห้องรอพบแพทย์</h2>
+        <h2 className="text-[#20211F]">ห้องรอพบแพทย์</h2>
         <p className="text-muted-moss text-sm mt-1">กรุณารอจนกว่าแพทย์จะรับการเชื่อมต่อ</p>
       </div>
 
@@ -155,7 +155,7 @@ export default function Page() {
             return (
               <div key={item.label} className="p-4 text-center">
                 <Icon className={`w-5 h-5 ${item.color} mx-auto mb-1`} />
-                <p className="font-semibold text-deep-emerald text-sm">{item.value}</p>
+                <p className="font-semibold text-[#20211F] text-sm">{item.value}</p>
                 <p className="text-muted-moss text-xs">{item.label}</p>
               </div>
             );
@@ -165,7 +165,7 @@ export default function Page() {
 
       {/* Device Check */}
       <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-        <h4 className="text-deep-emerald mb-4">ตรวจสอบอุปกรณ์</h4>
+        <h4 className="text-[#20211F] mb-4">ตรวจสอบอุปกรณ์</h4>
         <div className="space-y-3">
           {[
             { label: "กล้อง (Camera)", status: camOn, toggle: () => setCamOn(!camOn) },

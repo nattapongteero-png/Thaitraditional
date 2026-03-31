@@ -167,33 +167,33 @@ export default function Page() {
         <div className="w-20 h-20 bg-pale-mint rounded-full flex items-center justify-center mx-auto mb-4">
           <Check className="w-10 h-10 text-forest-leaf" />
         </div>
-        <h2 className="text-deep-emerald">จองนัดหมายสำเร็จ!</h2>
+        <h2 className="text-[#20211F]">จองนัดหมายสำเร็จ!</h2>
         <p className="text-muted-moss mt-2 text-sm">
           ระบบจะส่งการยืนยันผ่าน SMS และอีเมลของท่านภายใน 5 นาที
         </p>
         <div className="mt-6 bg-warm-sand border border-border rounded-2xl p-5 text-left space-y-3">
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">แพทย์</span>
-            <span className="text-deep-emerald font-medium">
+            <span className="text-[#20211F] font-medium">
               {selectedDoctorData?.name}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">วันที่</span>
-            <span className="text-deep-emerald font-medium">
+            <span className="text-[#20211F] font-medium">
               {selectedDay} {months[currentMonth]}{" "}
               {currentYear + 543}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">เวลา</span>
-            <span className="text-deep-emerald font-medium">
+            <span className="text-[#20211F] font-medium">
               {selectedTime} น.
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">ประเภท</span>
-            <span className="text-deep-emerald font-medium">
+            <span className="text-[#20211F] font-medium">
               Video Consultation
             </span>
           </div>
@@ -218,14 +218,14 @@ export default function Page() {
   if (step === "confirm" && canProceed) {
     return (
       <div className="pb-24 sm:pb-0">
-        <h2 className="text-deep-emerald mb-6">ยืนยันการนัดหมาย</h2>
+        <h2 className="text-[#20211F] mb-6">ยืนยันการนัดหมาย</h2>
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-warm-sand">
             <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
               <Stethoscope className="w-6 h-6 text-blue-600" />
             </div>
             <div>
-              <p className="font-semibold text-deep-emerald">
+              <p className="font-semibold text-[#20211F]">
                 {selectedDoctorData?.name}
               </p>
               <p className="text-sm text-muted-moss">
@@ -260,7 +260,7 @@ export default function Page() {
                 <span className="text-muted-moss text-sm flex-1">
                   {row.label}
                 </span>
-                <span className="text-deep-emerald text-sm font-medium">
+                <span className="text-[#20211F] text-sm font-medium">
                   {row.value}
                 </span>
               </div>
@@ -313,7 +313,7 @@ export default function Page() {
       <div className="space-y-5">
         {/* header */}
         <div>
-          <h2 className="text-deep-emerald">นัดหมาย</h2>
+          <h2 className="text-[#20211F]">นัดหมาย</h2>
           <p className="text-muted-moss text-sm mt-0.5">
             จัดการนัดหมายทั้งหมดของคุณ
           </p>
@@ -325,7 +325,7 @@ export default function Page() {
         {/* add new CTA */}
         <button
           onClick={() => setTab("book")}
-          className="w-full py-4 rounded-2xl border-2 border-dashed border-forest-leaf text-forest-leaf text-sm font-medium hover:bg-pale-mint transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-2xl border-2 border-dashed border-gray-300 text-gray-500 text-sm font-medium hover:bg-gray-50 hover:border-gray-400 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
         >
           <CalendarIcon className="w-4 h-4" />จองนัดหมายใหม่
         </button>
@@ -334,7 +334,7 @@ export default function Page() {
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-moss">
             นัดหมายที่กำลังจะมาถึง{" "}
-            <span className="font-semibold text-deep-emerald">
+            <span className="font-semibold text-[#20211F]">
               {upcomingAppointments.length} รายการ
             </span>
           </p>
@@ -347,32 +347,36 @@ export default function Page() {
               key={apt.id}
               className="group bg-white rounded-[24px] overflow-hidden shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]"
             >
-              {/* Green gradient top section – inset from edges */}
+              {/* Header gradient – matches home page banner style */}
               <div
-                className={`mx-[6.5px] mt-[6px] rounded-[20px] px-4 py-4 relative overflow-hidden ${
+                className={`mx-[6.5px] mt-[6px] rounded-[20px] pl-4 pr-24 py-4 relative overflow-hidden ${
                   apt.status === "confirmed"
-                    ? "bg-gradient-to-r from-[#d7e9db] to-[#97d999]"
-                    : "bg-gradient-to-r from-[#fef3c7] to-[#fcd34d]"
+                    ? "bg-gradient-to-r from-forest-leaf to-teal-600"
+                    : "bg-gradient-to-r from-amber-700 to-amber-500"
                 }`}
               >
+                {/* Decorative circles like home banner */}
+                <div className="absolute right-0 top-0 w-28 h-28 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3" />
+                <div className="absolute right-16 bottom-0 w-20 h-20 bg-white/5 rounded-full translate-y-1/2" />
+
                 {/* Doctor avatar */}
-                <div className="absolute right-0 bottom-0 h-[160%] w-32 pointer-events-none select-none">
+                <div className="absolute -right-2 bottom-0 h-[170%] w-32 pointer-events-none select-none">
                   <ImageWithFallback
                     src={apt.gender === "female" ? avatarDoctorFemale : avatarDoctorMale}
                     alt="doctor avatar"
-                    className="w-full h-full object-contain object-bottom drop-shadow-lg scale-110 origin-bottom transition-transform duration-300 group-hover:scale-125"
+                    className="w-full h-full object-contain object-bottom drop-shadow-lg origin-bottom transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
 
                 {/* Status badge */}
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[rgba(0,0,0,0.05)] text-black">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white backdrop-blur-sm">
                     {apt.status === "confirmed"
                       ? "ยืนยันแล้ว"
                       : "รอยืนยัน"}
                   </span>
                   {apt.rescheduleCount > 0 && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-[rgba(237,98,0,0.1)] text-[#ed6200]">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white backdrop-blur-sm">
                       <RefreshCw className="w-3 h-3" />
                       เลื่อนนัดแล้ว {apt.rescheduleCount}/2 ครั้ง
                     </span>
@@ -380,38 +384,36 @@ export default function Page() {
                 </div>
 
                 {/* Doctor name */}
-                <p className="font-bold text-[#101828] mt-[14px] text-[18px] leading-tight">
+                <p className="font-bold text-white mt-[14px] text-[18px] leading-tight">
                   {apt.doctor}
                 </p>
-                <p className="text-sm text-[#6a7282] mt-1">
+                <p className="text-sm text-white/70 mt-1">
                   {apt.specialty}
                 </p>
 
                 {/* Stats row */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-[12px] text-sm text-[#4a5565]">
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-[12px] text-xs">
                   <div className="flex items-center gap-1.5">
-                    <CalendarIcon className="w-3.5 h-3.5 text-olive-charcoal" />
-                    <span className="text-[#4d5867] text-[#4d5867] text-[#4d5867] text-[#4d5867] text-[#4c5766] text-[#4b5564] text-[#48525f] text-[#444c58] text-[#3e454d] text-[#383d44] text-[#33373c] text-[#2e3135] text-[#2b2e31] text-[#292b2d] text-[#252729] text-[#212324] text-[#1d1e1f] text-[#191a1b] text-[#161616] text-[#131313] text-[#101011] text-[#0d0e0e] text-[#0b0b0b] text-[#080808] text-[#070707] text-[#060606] text-[#050505] text-[#050505] text-[#050505] text-[#060606] text-[#060606] text-[#070707] text-[#090909] text-[#090909] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000]">
+                    <CalendarIcon className="w-3.5 h-3.5 text-white/70" />
+                    <span className="text-white/90">
                       {apt.day} {months[apt.month]}{" "}
                       {apt.year + 543}
                     </span>
                   </div>
-                  <span className="text-[#000000]">•</span>
+                  <span className="text-white/50">•</span>
                   <div className="flex items-center gap-1.5">
-                    <TimeCircleIcon className="w-3.5 h-3.5 text-[#000000]" />
-                    <span className="text-[#617ea9] text-[#617ea8] text-[#617da8] text-[#607ca6] text-[#5c77a0] text-[#556d91] text-[#4b5e7b] text-[#425066] text-[#384353] text-[#2e3541] text-[#23282f] text-[#181a1e] text-[#0c0d0e] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000]">
+                    <TimeCircleIcon className="w-3.5 h-3.5 text-white/70" />
+                    <span className="text-white/90">
                       {apt.time} น.
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <VideoIcon className="w-3.5 h-3.5 text-olive-charcoal" />
-                    <span className="text-[#9eb9df] text-[#9eb9df] text-[#9db8dd] text-[#9ab3d6] text-[#91a4bf] text-[#808a99] text-[#696d74] text-[#4c4d4e] text-[#2d2d2d] text-[#151515] text-[#060606] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000] text-[#000000]">
+                    <VideoIcon className="w-3.5 h-3.5 text-white/70" />
+                    <span className="text-white/90">
                       {apt.type}
                     </span>
                   </div>
                 </div>
-
-
               </div>
 
               {/* Bottom action bar – white bg */}
@@ -425,7 +427,7 @@ export default function Page() {
                       }
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-sm font-medium transition-colors text-white ${
                         apt.status === "confirmed"
-                          ? "bg-[#009966] hover:bg-[#007a52]"
+                          ? "bg-forest-leaf hover:bg-emerald-800"
                           : "bg-amber-500 hover:bg-amber-600"
                       }`}
                     >
@@ -462,7 +464,7 @@ export default function Page() {
               <AlertTriangle className="w-7 h-7 text-red-500" />
             </div>
             <div className="text-center">
-              <h3 className="text-deep-emerald text-base font-semibold">ยืนยันการยกเลิกนัด?</h3>
+              <h3 className="text-[#20211F] text-base font-semibold">ยืนยันการยกเลิกนัด?</h3>
               <p className="text-muted-moss text-sm mt-1">
                 นัดหมายกับ <span className="font-medium text-olive-charcoal">{cancelTarget.doctor}</span>
               </p>
@@ -504,7 +506,7 @@ export default function Page() {
           <ChevronLeft className="w-5 h-5 text-muted-moss" />
         </button>
         <div>
-          <h2 className="text-deep-emerald">จองนัดหมายใหม่</h2>
+          <h2 className="text-[#20211F]">จองนัดหมายใหม่</h2>
           <p className="text-muted-moss text-sm mt-0.5">
             เลือกแพทย์ วัน และเวลาที่ต้องการ
           </p>
@@ -576,7 +578,7 @@ export default function Page() {
 
         {/* Time Slots */}
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="mb-4 text-deep-emerald">เลือกเวลา</h4>
+          <h4 className="mb-4 text-[#20211F]">เลือกเวลา</h4>
           {selectedDay ? (
             <>
               <p className="text-xs text-muted-moss mb-3">
@@ -632,7 +634,7 @@ export default function Page() {
 
         {/* Doctor Selection */}
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="mb-4 text-deep-emerald">เลือกแพทย์</h4>
+          <h4 className="mb-4 text-[#20211F]">เลือกแพทย์</h4>
           <div className="space-y-3">
             {doctors.map((doc) => {
               const isSelected = doc.id === selectedDoctor;
@@ -648,7 +650,7 @@ export default function Page() {
                       <Stethoscope className="w-5 h-5 text-blue-600" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-deep-emerald">
+                      <p className="text-sm font-semibold text-[#20211F]">
                         {doc.name}
                       </p>
                       <p className="text-xs text-muted-moss">
@@ -686,7 +688,7 @@ export default function Page() {
           <div className="bg-white p-[4px]">
             {/* Title */}
             <p
-              className="font-bold text-[14px] text-black mx-[0px] mt-[0px] mb-[8px] px-[12px] pt-[8px] pb-[4px]"
+              className="font-bold text-[14px] text-[#20211F] mx-[0px] mt-[0px] mb-[8px] px-[12px] pt-[8px] pb-[4px]"
               style={{
                 fontFamily: "'Google Sans', sans-serif",
               }}
@@ -735,7 +737,7 @@ export default function Page() {
           /* ── PARTIAL / INCOMPLETE STATE ── */
           <div className="p-[0px]">
             {/* Title — เหมือน complete state */}
-            <p className="font-bold text-[14px] text-black m-[0px] pl-[12px] pr-[16px] py-[8px]">
+            <p className="font-bold text-[14px] text-[#20211F] m-[0px] pl-[12px] pr-[16px] py-[8px]">
               การนัดหมาย
             </p>
             <div className="bg-[#fafafa] rounded-[12px] p-3 flex flex-col gap-2 m-[0px]">

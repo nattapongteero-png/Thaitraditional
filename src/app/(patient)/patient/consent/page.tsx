@@ -38,8 +38,8 @@ export default function Page() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-deep-emerald">ความยินยอมและนโยบายความเป็นส่วนตัว</h2>
+      <div className="sticky top-0 z-10 bg-warm-sand pb-4 -mx-4 px-4 lg:-mx-6 lg:px-6 -mt-4 pt-4 lg:-mt-6 lg:pt-6">
+        <h2 className="text-[#20211F]">ความยินยอมและนโยบายความเป็นส่วนตัว</h2>
         <p className="text-muted-moss text-sm mt-1">จัดการการยินยอมและดูประวัติการลงนาม</p>
       </div>
 
@@ -83,7 +83,7 @@ export default function Page() {
           <div className="flex items-center gap-3">
             <PaperIcon className="w-5 h-5 text-forest-leaf" />
             <div>
-              <p className="font-semibold text-deep-emerald">นโยบายความเป็นส่วนตัว (Privacy Notice)</p>
+              <p className="font-semibold text-[#20211F]">นโยบายความเป็นส่วนตัว (Privacy Notice)</p>
               <p className="text-xs text-muted-moss">เวอร์ชัน 2.1 • อัปเดต 1 ก.พ. 2569</p>
             </div>
           </div>
@@ -97,11 +97,11 @@ export default function Page() {
         {expanded && (
           <div className="px-5 pb-5 space-y-4 text-sm text-olive-charcoal leading-relaxed border-t border-gray-50">
             <div className="pt-4">
-              <h4 className="text-deep-emerald mb-2">1. การเก็บรวบรวมข้อมูลส่วนบุคคล</h4>
+              <h4 className="text-[#20211F] mb-2">1. การเก็บรวบรวมข้อมูลส่วนบุคคล</h4>
               <p>ศูนย์การแพทย์แผนไทยจะเก็บรวบรวมข้อมูลส่วนบุคคลของท่าน ได้แก่ ชื่อ-นามสกุล หมายเลขบัตรประชาชน ข้อมูลสุขภาพ ประวัติการรักษา และข้อมูลการติดต่อ เพื่อวัตถุประสงค์ในการให้บริการทางการแพทย์แผนไทย</p>
             </div>
             <div>
-              <h4 className="text-deep-emerald mb-2">2. วัตถุประสงค์การใช้ข้อมูล</h4>
+              <h4 className="text-[#20211F] mb-2">2. วัตถุประสงค์การใช้ข้อมูล</h4>
               <ul className="list-disc list-inside space-y-1 text-olive-charcoal">
                 <li>เพื่อการวินิจฉัยและรักษาโรคทางการแพทย์แผนไทย</li>
                 <li>เพื่อจัดทำประวัติการรักษาและเอกสารทางการแพทย์</li>
@@ -110,11 +110,11 @@ export default function Page() {
               </ul>
             </div>
             <div>
-              <h4 className="text-deep-emerald mb-2">3. การเปิดเผยข้อมูล</h4>
+              <h4 className="text-[#20211F] mb-2">3. การเปิดเผยข้อมูล</h4>
               <p>ข้อมูลของท่านจะไม่ถูกเปิดเผยให้บุคคลภายนอก เว้นแต่เป็นไปตามที่กฎหมายกำหนด หรือได้รับความยินยอมจากท่าน</p>
             </div>
             <div>
-              <h4 className="text-deep-emerald mb-2">4. สิทธิของเจ้าของข้อมูล (PDPA)</h4>
+              <h4 className="text-[#20211F] mb-2">4. สิทธิของเจ้าของข้อมูล (PDPA)</h4>
               <ul className="list-disc list-inside space-y-1 text-olive-charcoal">
                 <li>สิทธิในการเข้าถึงและขอสำเนาข้อมูลส่วนบุคคล</li>
                 <li>สิทธิในการแก้ไขข้อมูลส่วนบุคคล</li>
@@ -123,7 +123,7 @@ export default function Page() {
               </ul>
             </div>
             <div>
-              <h4 className="text-deep-emerald mb-2">5. ติดต่อเจ้าหน้าที่คุ้มครองข้อมูล</h4>
+              <h4 className="text-[#20211F] mb-2">5. ติดต่อเจ้าหน้าที่คุ้มครองข้อมูล</h4>
               <p>Email: dpo@thaimed.go.th | โทร: 02-XXX-XXXX</p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function Page() {
       <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-50">
           <TimeCircleIcon className="w-4 h-4 text-muted-moss" />
-          <h4 className="text-deep-emerald">ประวัติการให้ความยินยอม</h4>
+          <h4 className="text-[#20211F]">ประวัติการให้ความยินยอม</h4>
         </div>
         <div className="divide-y divide-gray-50">
           {consentHistory.map((c) => (
@@ -164,7 +164,7 @@ export default function Page() {
                 <ShieldCheck className="w-4 h-4 text-forest-leaf" />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-deep-emerald">{c.type} {c.version}</p>
+                <p className="text-sm font-medium text-[#20211F]">{c.type} {c.version}</p>
                 <p className="text-xs text-muted-moss mt-0.5">{c.date} • IP: {c.ip}</p>
               </div>
               <span className="text-xs bg-green-100 text-green-700 px-2.5 py-1 rounded-lg">

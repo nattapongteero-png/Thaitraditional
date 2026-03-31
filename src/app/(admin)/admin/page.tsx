@@ -68,7 +68,7 @@ export default function Page() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-deep-emerald">แดชบอร์ด</h2>
+        <h2 className="text-[#20211F]">แดชบอร์ด</h2>
         <p className="text-muted-moss text-sm mt-1">ภาพรวมระบบ Telemedicine วันจันทร์ที่ 2 มีนาคม 2569</p>
       </div>
 
@@ -127,7 +127,7 @@ export default function Page() {
                   {stat.change}
                 </span>
               </div>
-              <p className="text-2xl font-semibold text-deep-emerald">{stat.value}</p>
+              <p className="text-2xl font-semibold text-[#20211F]">{stat.value}</p>
               <p className="text-muted-moss text-xs mt-0.5">{stat.label}</p>
               <p className="text-muted-moss text-xs">{stat.changeLabel}</p>
             </div>
@@ -163,7 +163,7 @@ export default function Page() {
         {/* Visit Chart */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-border shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
-            <h4 className="text-deep-emerald">จำนวน Visit รายวัน (สัปดาห์นี้)</h4>
+            <h4 className="text-[#20211F]">จำนวน Visit รายวัน (สัปดาห์นี้)</h4>
             <BarChart2 className="w-4 h-4 text-muted-moss" />
           </div>
           <ResponsiveContainer width="100%" height={200}>
@@ -181,7 +181,7 @@ export default function Page() {
 
         {/* Diagnosis Pie */}
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="text-deep-emerald mb-4">สัดส่วนการวินิจฉัย</h4>
+          <h4 className="text-[#20211F] mb-4">สัดส่วนการวินิจฉัย</h4>
           <ResponsiveContainer width="100%" height={150}>
             <PieChart>
               <Pie data={diagnosisData} cx="50%" cy="50%" outerRadius={65} dataKey="value" strokeWidth={2} stroke="#fff">
@@ -211,7 +211,7 @@ export default function Page() {
 
       {/* Revenue Chart */}
       <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-        <h4 className="text-deep-emerald mb-4">รายได้รายสัปดาห์ (บาท)</h4>
+        <h4 className="text-[#20211F] mb-4">รายได้รายสัปดาห์ (บาท)</h4>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart data={weeklyRevenue}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -229,7 +229,7 @@ export default function Page() {
       {/* Activity Feed */}
       <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
-          <h4 className="text-deep-emerald">กิจกรรมล่าสุด (Audit)</h4>
+          <h4 className="text-[#20211F]">กิจกรรมล่าสุด (Audit)</h4>
           <button className="text-forest-leaf text-sm hover:underline">ดูทั้งหมด →</button>
         </div>
         <div className="divide-y divide-gray-50">

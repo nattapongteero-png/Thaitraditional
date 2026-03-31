@@ -56,7 +56,7 @@ export default function Page() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl text-deep-emerald">แม่แบบการรักษา</h1>
+          <h1 className="text-xl text-[#20211F]">แม่แบบการรักษา</h1>
           <p className="text-sm text-muted-moss mt-1">
             บันทึกรูปแบบการรักษาที่ใช้บ่อย เพื่อเรียกใช้ได้รวดเร็ว
           </p>
@@ -92,7 +92,7 @@ export default function Page() {
                   <PaperIcon className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-deep-emerald">{t.name}</p>
+                  <p className="text-sm text-[#20211F]">{t.name}</p>
                   <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
                     {t.category}
                   </span>

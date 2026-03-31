@@ -49,7 +49,7 @@ export function DoctorLayout({ children }: { children: React.ReactNode }) {
               <Leaf className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-deep-emerald font-semibold text-sm leading-tight">ศูนย์การแพทย์แผนไทย</p>
+              <p className="text-[#20211F] font-semibold text-sm leading-tight">ศูนย์การแพทย์แผนไทย</p>
               <p className="text-muted-moss text-xs">Doctor Portal</p>
             </div>
           </div>
@@ -71,10 +71,10 @@ export function DoctorLayout({ children }: { children: React.ReactNode }) {
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl mb-0.5 transition-all text-sm
                   ${isActive
                     ? "bg-forest-leaf text-white shadow-sm"
-                    : "text-olive-charcoal hover:bg-gray-100 hover:text-deep-emerald"
+                    : "text-olive-charcoal hover:bg-gray-100 hover:text-[#20211F]"
                   }`}
               >
-                <Icon className="w-4 h-4 flex-shrink-0" />
+                <Icon className="w-5 h-5 flex-shrink-0" />
                 <span>{item.label}</span>
               </Link>
             );
@@ -88,7 +88,7 @@ export function DoctorLayout({ children }: { children: React.ReactNode }) {
               <Stethoscope className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-deep-emerald truncate">นพ. สมชาย แพทย์ไทย</p>
+              <p className="text-sm font-semibold text-[#20211F] truncate">นพ. สมชาย แพทย์ไทย</p>
               <p className="text-xs text-forest-leaf">แพทย์แผนไทยประยุกต์</p>
             </div>
           </div>

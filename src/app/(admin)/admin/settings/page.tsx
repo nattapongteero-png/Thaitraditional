@@ -59,7 +59,7 @@ export default function Page() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-deep-emerald">ตั้งค่าคลินิก</h2>
+          <h2 className="text-[#20211F]">ตั้งค่าคลินิก</h2>
           <p className="text-muted-moss text-sm mt-1">กำหนดค่าระบบและการบูรณาการ</p>
         </div>
         <button
@@ -97,7 +97,7 @@ export default function Page() {
       {activeTab === "general" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-4">
-            <h4 className="text-deep-emerald">ข้อมูลคลินิก</h4>
+            <h4 className="text-[#20211F]">ข้อมูลคลินิก</h4>
             {[
               { label: "ชื่อคลินิก", value: "ศูนย์การแพทย์แผนไทย" },
               { label: "ที่อยู่", value: "123 ถ.ราชวิถี กรุงเทพฯ 10400" },
@@ -118,7 +118,7 @@ export default function Page() {
 
           <div className="space-y-5">
             <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-4">
-              <h4 className="text-deep-emerald">Feature Flags</h4>
+              <h4 className="text-[#20211F]">Feature Flags</h4>
               {[
                 { label: "Standalone Mode", desc: "ทำงานโดยไม่ต้องเชื่อมต่อ EHP", enabled: false },
                 { label: "Integrated Mode (EHP)", desc: "เชื่อมต่อ PhamEnpointAPI", enabled: true },
@@ -141,7 +141,7 @@ export default function Page() {
             </div>
 
             <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-3">
-              <h4 className="text-deep-emerald">Session & Security</h4>
+              <h4 className="text-[#20211F]">Session & Security</h4>
               {[
                 { label: "Session Timeout (นาที)", value: "30" },
                 { label: "Max Login Attempts", value: "5" },
@@ -165,7 +165,7 @@ export default function Page() {
       {activeTab === "slots" && (
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
           <div className="flex items-center justify-between mb-5">
-            <h4 className="text-deep-emerald">ช่วงเวลาให้บริการ</h4>
+            <h4 className="text-[#20211F]">ช่วงเวลาให้บริการ</h4>
             <div className="flex items-center gap-2">
               <label className="text-sm text-olive-charcoal">ระยะเวลา Slot</label>
               <select className="px-3 py-2 rounded-xl border border-border bg-warm-sand text-sm focus:outline-none focus:ring-2 focus:ring-forest-leaf">
@@ -225,7 +225,7 @@ export default function Page() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-deep-emerald">{intg.name}</h4>
+                      <h4 className="text-[#20211F]">{intg.name}</h4>
                       <button
                         onClick={() => setIntegrations((i) => ({ ...i, [intg.key]: !enabled }))}
                         className={`w-12 h-6 rounded-full relative transition-all ${enabled ? "bg-forest-leaf" : "bg-gray-200"}`}
@@ -279,7 +279,7 @@ export default function Page() {
                   <PaperIcon className="w-4 h-4 text-forest-leaf" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-deep-emerald">{t.name}</p>
+                  <p className="text-sm font-medium text-[#20211F]">{t.name}</p>
                   <div className="flex items-center gap-3 mt-0.5">
                     <span className="text-xs text-muted-moss">ใช้ล่าสุด: {t.lastUsed}</span>
                     <span className="text-xs text-muted-moss">ใช้งาน {t.uses} ครั้ง</span>
@@ -298,7 +298,7 @@ export default function Page() {
       {/* Notifications */}
       {activeTab === "notifications" && (
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-4">
-          <h4 className="text-deep-emerald">การตั้งค่าการแจ้งเตือน</h4>
+          <h4 className="text-[#20211F]">การตั้งค่าการแจ้งเตือน</h4>
           {[
             { label: "SMS ยืนยันนัดหมาย", desc: "ส่ง SMS เมื่อผู้ป่วยจองนัด", enabled: true },
             { label: "SMS เตือนก่อนนัด 1 ชม.", desc: "แจ้งเตือนผู้ป่วยก่อนพบแพทย์", enabled: true },

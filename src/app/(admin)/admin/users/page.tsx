@@ -80,7 +80,7 @@ export default function Page() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-deep-emerald">จัดการผู้ใช้งาน (RBAC)</h2>
+          <h2 className="text-[#20211F]">จัดการผู้ใช้งาน (RBAC)</h2>
           <p className="text-muted-moss text-sm mt-1">จัดการบัญชีผู้ใช้และสิทธิ์การเข้าถึง</p>
         </div>
         <button
@@ -95,7 +95,7 @@ export default function Page() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: "ผู้ใช้ทั้งหมด", value: stats.total, color: "text-deep-emerald" },
+          { label: "ผู้ใช้ทั้งหมด", value: stats.total, color: "text-[#20211F]" },
           { label: "ใช้งานอยู่", value: stats.active, color: "text-forest-leaf" },
           { label: "แพทย์", value: stats.doctors, color: "text-blue-700" },
           { label: "ผู้ป่วย", value: stats.patients, color: "text-forest-leaf" },
@@ -162,7 +162,7 @@ export default function Page() {
                           <RoleIcon className="w-4 h-4 text-forest-leaf" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-deep-emerald">{user.name}</p>
+                          <p className="text-sm font-medium text-[#20211F]">{user.name}</p>
                           <p className="text-xs text-muted-moss md:hidden">{user.email}</p>
                         </div>
                       </div>
@@ -217,7 +217,7 @@ export default function Page() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
             <div className="flex items-center justify-between p-5 border-b border-border">
-              <h3 className="text-deep-emerald">เพิ่มผู้ใช้ใหม่</h3>
+              <h3 className="text-[#20211F]">เพิ่มผู้ใช้ใหม่</h3>
               <button onClick={() => setShowAdd(false)} className="p-2 hover:bg-pale-mint rounded-xl">
                 <X className="w-5 h-5 text-muted-moss" />
               </button>

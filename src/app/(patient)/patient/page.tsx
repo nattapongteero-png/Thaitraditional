@@ -55,7 +55,7 @@ const notifications = [
   {
     id: 1,
     icon: NotificationIcon,
-    color: "text-blue-500 bg-blue-50",
+    color: "text-forest-leaf bg-pale-mint",
     title: "ยืนยันนัดหมาย",
     desc: "นัดหมายวันที่ 3 มี.ค. ได้รับการยืนยันแล้ว",
     time: "30 นาทีที่แล้ว",
@@ -71,7 +71,7 @@ const notifications = [
   {
     id: 3,
     icon: PaperIcon,
-    color: "text-amber-500 bg-amber-50",
+    color: "text-golden-turmeric bg-[#FDF3E7]",
     title: "เอกสารพร้อม",
     desc: "ใบสรุปการรักษา Visit #003 พร้อมดาวน์โหลด",
     time: "เมื่อวานนี้",
@@ -125,7 +125,7 @@ export default function Page() {
         {/* Upcoming Appointments */}
         <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-warm-sand">
-            <h3 className="text-deep-emerald">นัดหมายที่กำลังจะถึง</h3>
+            <h3 className="text-[#20211F]">นัดหมายที่กำลังจะถึง</h3>
             <button
               onClick={() => router.push("/patient/appointment")}
               className="text-forest-leaf text-sm hover:underline flex items-center gap-1"
@@ -137,7 +137,7 @@ export default function Page() {
             {upcomingAppointments.map((appt) => (
               <div key={appt.id} className="px-5 py-4">
                 <div className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-[14px] overflow-hidden flex-shrink-0 ${appt.status === "confirmed" ? "bg-[#d0fae5]" : "bg-amber-100"}`}>
+                  <div className={`w-10 h-10 rounded-[14px] overflow-hidden flex-shrink-0 ${appt.status === "confirmed" ? "bg-pale-mint" : "bg-[#FDF3E7]"}`}>
                     <img
                       src={appt.gender === "female" ? doctorFemale : doctorMale}
                       alt="doctor"
@@ -145,7 +145,7 @@ export default function Page() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-deep-emerald text-sm">{appt.doctor}</p>
+                    <p className="font-semibold text-[#20211F] text-sm">{appt.doctor}</p>
                     <p className="text-muted-moss text-xs">{appt.specialty}</p>
                     <div className="flex items-center gap-3 mt-2">
                       <div className="flex items-center gap-1 text-xs text-olive-charcoal">
@@ -162,7 +162,7 @@ export default function Page() {
                     className={`text-xs px-2 py-1 rounded-lg font-medium flex-shrink-0 ${
                       appt.status === "confirmed"
                         ? "bg-green-100 text-green-700"
-                        : "bg-amber-100 text-amber-700"
+                        : "bg-[#FDF3E7] text-golden-turmeric"
                     }`}
                   >
                     {appt.status === "confirmed" ? "ยืนยันแล้ว" : "รอยืนยัน"}
@@ -184,7 +184,7 @@ export default function Page() {
         {/* Notifications */}
         <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-warm-sand">
-            <h3 className="text-deep-emerald">การแจ้งเตือน</h3>
+            <h3 className="text-[#20211F]">การแจ้งเตือน</h3>
             <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full">3 ใหม่</span>
           </div>
           <div className="divide-y divide-warm-sand">
@@ -196,7 +196,7 @@ export default function Page() {
                     <Icon className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-deep-emerald">{n.title}</p>
+                    <p className="text-sm font-semibold text-[#20211F]">{n.title}</p>
                     <p className="text-xs text-muted-moss mt-0.5">{n.desc}</p>
                   </div>
                   <span className="text-xs text-muted-moss flex-shrink-0">{n.time}</span>
@@ -208,15 +208,15 @@ export default function Page() {
       </div>
 
       {/* Health Tips */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-5">
+      <div className="bg-gradient-to-r from-pale-mint/40 to-pale-mint/20 border border-pale-mint rounded-2xl p-5">
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
-            <HeartIcon className="w-5 h-5 text-amber-600" />
+          <div className="w-10 h-10 bg-pale-mint rounded-xl flex items-center justify-center flex-shrink-0">
+            <HeartIcon className="w-5 h-5 text-forest-leaf" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h4 className="text-deep-emerald">คำแนะนำสุขภาพจากแพทย์</h4>
-              <span className="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full">Visit #003</span>
+              <h4 className="text-[#20211F]">คำแนะนำสุขภาพจากแพทย์</h4>
+              <span className="bg-pale-mint text-forest-leaf text-xs px-2 py-0.5 rounded-full">Visit #003</span>
             </div>
             <p className="text-olive-charcoal text-sm mt-1 leading-relaxed">
               ควรดื่มน้ำอย่างน้อย 8 แก้วต่อวัน รับประทานยาสมุนไพรตามที่แพทย์สั่งหลังอาหาร

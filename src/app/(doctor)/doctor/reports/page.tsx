@@ -41,7 +41,7 @@ export default function Page() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl text-deep-emerald">รายงาน</h1>
+        <h1 className="text-xl text-[#20211F]">รายงาน</h1>
         <p className="text-sm text-muted-moss mt-1">สรุปข้อมูลการให้บริการของคุณ</p>
       </div>
 
@@ -59,7 +59,7 @@ export default function Page() {
               >
                 <Icon className="w-5 h-5" />
               </div>
-              <p className="text-2xl text-deep-emerald">{s.value}</p>
+              <p className="text-2xl text-[#20211F]">{s.value}</p>
               <p className="text-xs text-muted-moss mt-1">{s.label}</p>
             </div>
           );

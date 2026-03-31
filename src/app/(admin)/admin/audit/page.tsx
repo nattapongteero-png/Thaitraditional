@@ -156,7 +156,7 @@ export default function Page() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-deep-emerald">Audit Log</h2>
+          <h2 className="text-[#20211F]">Audit Log</h2>
           <p className="text-muted-moss text-sm mt-1">บันทึกการใช้งานระบบและการเข้าถึงเวชระเบียน</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-border text-olive-charcoal rounded-xl text-sm font-medium hover:bg-pale-mint transition-colors shadow-sm">
@@ -168,7 +168,7 @@ export default function Page() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: "รวมทั้งหมด", value: logs.length, color: "text-deep-emerald" },
+          { label: "รวมทั้งหมด", value: logs.length, color: "text-[#20211F]" },
           { label: "คำเตือน", value: logs.filter((l) => l.status === "warning").length, color: "text-amber-700" },
           { label: "ผิดพลาด", value: logs.filter((l) => l.status === "error").length, color: "text-red-700" },
         ].map((s) => (

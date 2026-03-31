@@ -53,16 +53,16 @@ export default function Container() {
           <div className="absolute content-stretch flex gap-[6px] h-[20px] items-center left-0 top-0 w-[111.281px]" data-name="Container">
             <Wrapper1 additionalClassNames="relative shrink-0">
               <g id="CalendarDays">
-                <path d="M4.66667 1.16667V3.5" id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M9.33333 1.16667V3.5" id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d={svgPaths.p24a2b500} id="Vector_3" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M1.75 5.83333H12.25" id="Vector_4" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M4.66667 8.16667H4.6725" id="Vector_5" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M7 8.16667H7.00583" id="Vector_6" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M9.33333 8.16667H9.33917" id="Vector_7" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M4.66667 10.5H4.6725" id="Vector_8" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M7 10.5H7.00583" id="Vector_9" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M9.33333 10.5H9.33917" id="Vector_10" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+                <path d="M4.66667 1.16667V3.5" id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M9.33333 1.16667V3.5" id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d={svgPaths.p24a2b500} id="Vector_3" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M1.75 5.83333H12.25" id="Vector_4" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M4.66667 8.16667H4.6725" id="Vector_5" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M7 8.16667H7.00583" id="Vector_6" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M9.33333 8.16667H9.33917" id="Vector_7" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M4.66667 10.5H4.6725" id="Vector_8" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M7 10.5H7.00583" id="Vector_9" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M9.33333 10.5H9.33917" id="Vector_10" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
               </g>
             </Wrapper1>
             <SpanText text="15 มีนาคม 2569" />
@@ -73,8 +73,8 @@ export default function Container() {
           <div className="absolute content-stretch flex gap-[6px] h-[20px] items-center left-[140.98px] top-0 w-[73.438px]" data-name="Container">
             <Wrapper1 additionalClassNames="relative shrink-0">
               <g clipPath="url(#clip0_11_453)" id="Clock">
-                <path d={svgPaths.pc012c00} id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d="M7 3.5V7L9.33333 8.16667" id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+                <path d={svgPaths.pc012c00} id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M7 3.5V7L9.33333 8.16667" id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
               </g>
               <defs>
                 <clipPath id="clip0_11_453">
@@ -87,8 +87,8 @@ export default function Container() {
           <div className="absolute content-stretch flex gap-[6px] h-[20px] items-center left-[226.42px] top-0 w-[139.883px]" data-name="Container">
             <Wrapper1 additionalClassNames="relative shrink-0">
               <g id="Video">
-                <path d={svgPaths.p16485200} id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                <path d={svgPaths.p2e981000} id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+                <path d={svgPaths.p16485200} id="Vector" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d={svgPaths.p2e981000} id="Vector_2" stroke="var(--stroke-0, #99A1AF)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
               </g>
             </Wrapper1>
             <SpanText text="Video Consultation" />
@@ -109,10 +109,10 @@ export default function Container() {
             <Wrapper additionalClassNames="bg-[#096] h-[36px] rounded-[14px]">
               <Wrapper1 additionalClassNames="absolute left-[16px] top-[11px]">
                 <g id="RefreshCw">
-                  <path d={svgPaths.p3fb08a80} id="Vector" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                  <path d="M12.25 1.75V4.66667H9.33333" id="Vector_2" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                  <path d={svgPaths.p32253d00} id="Vector_3" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                  <path d="M4.66667 9.33333H1.75V12.25" id="Vector_4" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+                  <path d={svgPaths.p3fb08a80} id="Vector" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                  <path d="M12.25 1.75V4.66667H9.33333" id="Vector_2" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                  <path d={svgPaths.p32253d00} id="Vector_3" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                  <path d="M4.66667 9.33333H1.75V12.25" id="Vector_4" stroke="var(--stroke-0, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                 </g>
               </Wrapper1>
               <p className="-translate-x-1/2 absolute font-['Google_Sans_Text:Medium',sans-serif] leading-[20px] left-[59.5px] not-italic text-[14px] text-center text-white top-[8px] whitespace-nowrap">เลื่อนนัด</p>
