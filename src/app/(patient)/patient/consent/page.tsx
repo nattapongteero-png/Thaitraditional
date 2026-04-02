@@ -38,7 +38,7 @@ export default function Page() {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-0 z-10 bg-warm-sand pb-4 -mx-4 px-4 lg:-mx-6 lg:px-6 -mt-4 pt-4 lg:-mt-6 lg:pt-6">
+      <div className="sticky top-0 z-10 pb-4 -mx-4 px-4 lg:-mx-6 lg:px-6 -mt-4 pt-4 lg:-mt-6 lg:pt-6" style={{ backgroundColor: "#FDF8F2" }}>
         <h2 className="text-[#20211F]">ความยินยอมและนโยบายความเป็นส่วนตัว</h2>
         <p className="text-muted-moss text-sm mt-1">จัดการการยินยอมและดูประวัติการลงนาม</p>
       </div>
