@@ -45,23 +45,6 @@ const doctors = [
   },
 ];
 
-const timeSlots = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-];
-
-const unavailableSlots = ["09:30", "10:30", "14:00"];
-
 const daysOfWeek = ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"];
 const months = [
   "มกราคม",
@@ -77,15 +60,6 @@ const months = [
   "พฤศจิกายน",
   "ธันวาคม",
 ];
-
-function generateCalendar(year: number, month: number) {
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const cells: (number | null)[] = [];
-  for (let i = 0; i < firstDay; i++) cells.push(null);
-  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
-  return cells;
-}
 
 const upcomingAppointments = [
   {
@@ -151,8 +125,9 @@ export default function Page() {
   >("select");
   const [reason, setReason] = useState("");
   const [cancelTarget, setCancelTarget] = useState<typeof upcomingAppointments[0] | null>(null);
+  const [mobileBookOpen, setMobileBookOpen] = useState(false);
+  const [mobileBookStep, setMobileBookStep] = useState<"calendar" | "doctor" | "confirm">("calendar");
 
-  const calendar = generateCalendar(currentYear, currentMonth);
   const todayDay = today.getDate();
   const selectedDoctorData = doctors.find(
     (d) => d.id === selectedDoctor,
@@ -160,116 +135,95 @@ export default function Page() {
   const canProceed =
     selectedDay && selectedDoctor && selectedTime;
 
-  // ── done ─────────────────────────────────────────────────────
-  if (step === "done") {
-    return (
-      <div className="mt-16 text-center">
-        <div className="w-20 h-20 bg-pale-mint rounded-full flex items-center justify-center mx-auto mb-4">
-          <Check className="w-10 h-10 text-forest-leaf" />
+  const resetBooking = () => {
+    setStep("select");
+    setSelectedDay(null);
+    setSelectedTime(null);
+    setSelectedDoctor(null);
+    setReason("");
+    setTab("my");
+    setMobileBookOpen(false);
+    setMobileBookStep("calendar");
+  };
+
+  // Success popup overlay (shown on top of current view)
+  const successPopup = step === "done" && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={resetBooking} />
+      <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 flex flex-col items-center gap-3">
+        <button onClick={resetBooking} className="absolute top-4 right-4 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+          <span className="text-sm text-[#20211F] leading-none">✕</span>
+        </button>
+        <div className="w-16 h-16 bg-pale-mint rounded-full flex items-center justify-center">
+          <Check className="w-8 h-8 text-forest-leaf" />
         </div>
-        <h2 className="text-[#20211F]">จองนัดหมายสำเร็จ!</h2>
-        <p className="text-muted-moss mt-2 text-sm">
-          ระบบจะส่งการยืนยันผ่าน SMS และอีเมลของท่านภายใน 5 นาที
+        <h3 className="text-[#20211F] text-base font-semibold">จองนัดหมายสำเร็จ!</h3>
+        <p className="text-muted-moss text-sm text-center">
+          ระบบจะส่งการยืนยันผ่าน SMS และอีเมลภายใน 5 นาที
         </p>
-        <div className="mt-6 bg-warm-sand border border-border rounded-2xl p-5 text-left space-y-3">
+        <div className="w-full bg-gray-50 rounded-xl p-4 space-y-2 mt-1">
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">แพทย์</span>
-            <span className="text-[#20211F] font-medium">
-              {selectedDoctorData?.name}
-            </span>
+            <span className="text-[#20211F] font-medium">{selectedDoctorData?.name}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">วันที่</span>
-            <span className="text-[#20211F] font-medium">
-              {selectedDay} {months[currentMonth]}{" "}
-              {currentYear + 543}
-            </span>
+            <span className="text-[#20211F] font-medium">{selectedDay} {months[currentMonth]} {currentYear + 543}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">เวลา</span>
-            <span className="text-[#20211F] font-medium">
-              {selectedTime} น.
-            </span>
+            <span className="text-[#20211F] font-medium">{selectedTime} น.</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-moss">ประเภท</span>
-            <span className="text-[#20211F] font-medium">
-              Video Consultation
-            </span>
+            <span className="text-[#20211F] font-medium">Video Consultation</span>
           </div>
         </div>
-        <button
-          onClick={() => {
-            setStep("select");
-            setSelectedDay(null);
-            setSelectedTime(null);
-            setSelectedDoctor(null);
-            setTab("my");
-          }}
-          className="mt-6 w-full py-3 bg-forest-leaf text-white rounded-xl font-semibold hover:bg-forest-leaf-hover transition-colors"
-        >
-          ดูนัดหมายของฉัน
-        </button>
+        <div className="flex gap-3 w-full mt-2">
+          <button onClick={resetBooking} className="flex-1 py-2.5 rounded-xl border border-border text-olive-charcoal text-sm font-medium hover:bg-pale-mint transition-colors">
+            ปิด
+          </button>
+          <button onClick={resetBooking} className="flex-1 py-2.5 rounded-xl bg-forest-leaf text-white text-sm font-semibold hover:bg-emerald-800 transition-colors">
+            ดูนัดหมายของฉัน
+          </button>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 
-  // ── confirm ───────────────────────────────────────────────────
-  if (step === "confirm" && canProceed) {
+  // Confirm step is now handled inside bottom sheet (mobile) or inline (desktop)
+  // Desktop confirm page
+  if (step === "confirm" && canProceed && !mobileBookOpen) {
     return (
+      <>
       <div className="pb-24 sm:pb-0">
         <h2 className="text-[#20211F] mb-6">ยืนยันการนัดหมาย</h2>
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-warm-sand">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-              <Stethoscope className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-pale-mint rounded-xl flex items-center justify-center">
+              <Stethoscope className="w-6 h-6 text-forest-leaf" />
             </div>
             <div>
-              <p className="font-semibold text-[#20211F]">
-                {selectedDoctorData?.name}
-              </p>
-              <p className="text-sm text-muted-moss">
-                {selectedDoctorData?.specialty}
-              </p>
+              <p className="font-semibold text-[#20211F]">{selectedDoctorData?.name}</p>
+              <p className="text-sm text-muted-moss">{selectedDoctorData?.specialty}</p>
             </div>
           </div>
           {[
-            {
-              label: "วันที่",
-              value: `${selectedDay} ${months[currentMonth]} ${currentYear + 543}`,
-              icon: CalendarIcon,
-            },
-            {
-              label: "เวลา",
-              value: `${selectedTime} น.`,
-              icon: TimeCircleIcon,
-            },
-            {
-              label: "ประเภทการพบ",
-              value: "Video Consultation",
-              icon: VideoIcon,
-            },
+            { label: "วันที่", value: `${selectedDay} ${months[currentMonth]} ${currentYear + 543}`, icon: CalendarIcon },
+            { label: "เวลา", value: `${selectedTime} น.`, icon: TimeCircleIcon },
+            { label: "ประเภทการพบ", value: "Video Consultation", icon: VideoIcon },
           ].map((row) => {
             const Icon = row.icon;
             return (
-              <div
-                key={row.label}
-                className="flex items-center gap-3"
-              >
+              <div key={row.label} className="flex items-center gap-3">
                 <Icon className="w-4 h-4 text-muted-moss" />
-                <span className="text-muted-moss text-sm flex-1">
-                  {row.label}
-                </span>
-                <span className="text-[#20211F] text-sm font-medium">
-                  {row.value}
-                </span>
+                <span className="text-muted-moss text-sm flex-1">{row.label}</span>
+                <span className="text-[#20211F] text-sm font-medium">{row.value}</span>
               </div>
             );
           })}
           <div className="pt-2">
-            <label className="text-sm text-olive-charcoal block mb-1.5">
-              อาการ/เหตุผลในการพบแพทย์
-            </label>
+            <label className="text-sm text-olive-charcoal block mb-1.5">อาการ/เหตุผลในการพบแพทย์</label>
             <textarea
               rows={3}
               value={reason}
@@ -279,30 +233,16 @@ export default function Page() {
             />
           </div>
         </div>
-
         <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
-          <p className="text-sm text-amber-800">
-            <strong>โปรดทราบ:</strong>{" "}
-            กรุณาเตรียมบัตรประชาชนและพร้อมในระบบก่อนเวลานัดหมาย
-            5 นาที
-          </p>
+          <p className="text-sm text-amber-800"><strong>โปรดทราบ:</strong> กรุณาเตรียมบัตรประชาชนและพร้อมในระบบก่อนเวลานัดหมาย 5 นาที</p>
         </div>
-
-        <div className="flex gap-3 mt-5 fixed bottom-0 left-0 right-0 z-40 p-4 bg-white/95 backdrop-blur-sm border-t border-border sm:static sm:bg-transparent sm:border-0 sm:p-0 sm:backdrop-blur-none">
-          <button
-            onClick={() => setStep("select")}
-            className="flex-1 py-3 border border-border text-olive-charcoal rounded-xl font-medium hover:bg-pale-mint transition-colors bg-white"
-          >
-            แก้ไข
-          </button>
-          <button
-            onClick={() => setStep("done")}
-            className="flex-1 py-3 bg-forest-leaf text-white rounded-xl font-semibold hover:bg-forest-leaf-hover transition-colors"
-          >
-            ยืนยันนัดหมาย
-          </button>
+        <div className="flex gap-3 mt-5">
+          <button onClick={() => setStep("select")} className="flex-1 py-3 border border-border text-olive-charcoal rounded-xl font-medium hover:bg-pale-mint transition-colors bg-white">แก้ไข</button>
+          <button onClick={() => setStep("done")} className="flex-1 py-3 bg-forest-leaf text-white rounded-xl font-semibold hover:bg-forest-leaf-hover transition-colors">ยืนยันนัดหมาย</button>
         </div>
       </div>
+      {successPopup}
+      </>
     );
   }
 
@@ -322,9 +262,22 @@ export default function Page() {
         {/* tab switcher */}
 
 
-        {/* add new CTA */}
+        {/* add new CTA — desktop goes to book tab, mobile opens bottom sheet */}
         <button
-          onClick={() => setTab("book")}
+          onClick={() => {
+            // Reset booking state
+            setSelectedDay(null);
+            setSelectedTime(null);
+            setSelectedDoctor(null);
+            setStep("select");
+            // Desktop: switch tab, Mobile: open bottom sheet
+            if (window.innerWidth >= 1024) {
+              setTab("book");
+            } else {
+              setMobileBookOpen(true);
+              setMobileBookStep("calendar");
+            }
+          }}
           className="w-full py-4 rounded-2xl border-2 border-dashed border-gray-300 text-gray-500 text-sm font-medium hover:bg-gray-50 hover:border-gray-400 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
         >
           <CalendarIcon className="w-4 h-4" />จองนัดหมายใหม่
@@ -490,327 +443,525 @@ export default function Page() {
           </div>
         </div>
       )}
+
+      {/* Mobile Booking Bottom Sheet */}
+      {mobileBookOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end"
+          onClick={() => setMobileBookOpen(false)}
+        >
+          <div
+            className="bg-white rounded-t-3xl w-full h-[90vh] overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Handle + Header */}
+            <div className="relative px-5 pt-4 pb-3 border-b border-warm-sand flex-shrink-0">
+              <div className="w-10 h-1 bg-gray-300 rounded-full mx-auto mb-3" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {mobileBookStep !== "calendar" && (
+                    <button
+                      onClick={() => setMobileBookStep(mobileBookStep === "confirm" ? "doctor" : "calendar")}
+                      className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-[#20211F]" />
+                    </button>
+                  )}
+                  <div>
+                    <h3 className="text-[#20211F] text-base font-semibold">
+                      {mobileBookStep === "calendar" ? "เลือกวันและเวลา" : mobileBookStep === "doctor" ? "เลือกแพทย์" : "ยืนยันการนัดหมาย"}
+                    </h3>
+                    {mobileBookStep !== "calendar" && selectedDay && selectedTime && (
+                      <p className="text-xs text-muted-moss mt-0.5">
+                        {selectedDay} {months[currentMonth]} {currentYear + 543} • {selectedTime} น.
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setMobileBookOpen(false)}
+                  className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+                >
+                  <span className="text-sm text-[#20211F] leading-none">✕</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Page Views */}
+            <div className="flex-1 overflow-hidden relative">
+              {/* Step 1: Calendar + Time — fixed layout */}
+              <div className={`absolute inset-0 flex flex-col transition-transform duration-300 ${
+                mobileBookStep === "calendar" ? "translate-x-0" : "-translate-x-full"
+              }`}>
+                {/* Month Header */}
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0">
+                  <button onClick={() => setCurrentMonth((m) => Math.max(0, m - 1))} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                    <ChevronLeft className="w-4 h-4 text-[#20211F]" />
+                  </button>
+                  <p className="text-sm font-semibold text-[#20211F]">{months[currentMonth]} {currentYear + 543}</p>
+                  <button onClick={() => setCurrentMonth((m) => Math.min(11, m + 1))} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                    <ChevronRight className="w-4 h-4 text-[#20211F]" />
+                  </button>
+                </div>
+
+                {/* Calendar */}
+                <div className="px-4 pt-2 pb-1 flex-shrink-0 flex-1 flex flex-col justify-center">
+                  <div className="grid grid-cols-7 gap-2 mb-1">
+                    {daysOfWeek.map((d) => (
+                      <div key={d} className="text-center text-[10px] text-muted-moss font-medium py-1">{d}</div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-7 gap-2">
+                    {(() => {
+                      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                      const cells: (number | null)[] = [];
+                      for (let i = 0; i < firstDay; i++) cells.push(null);
+                      for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+                      return cells.map((day, i) => {
+                        const isToday = day === todayDay && currentMonth === 2;
+                        const isPast = day !== null && day < todayDay && currentMonth === 2;
+                        const isSelected = day === selectedDay;
+                        return (
+                          <button
+                            key={i}
+                            disabled={!day || isPast}
+                            onClick={() => { if (day) { setSelectedDay(day); setSelectedTime(null); setSelectedDoctor(null); } }}
+                            className={`text-center text-sm py-3.5 rounded-xl transition-all
+                              ${!day ? "invisible" : ""}
+                              ${isPast ? "text-gray-300 cursor-not-allowed" : "cursor-pointer"}
+                              ${isSelected ? "bg-forest-leaf text-white font-semibold" : ""}
+                              ${isToday && !isSelected ? "bg-pale-mint text-forest-leaf font-semibold" : ""}
+                              ${!isSelected && !isToday && !isPast && day ? "hover:bg-pale-mint" : ""}
+                            `}
+                          >
+                            {day}
+                          </button>
+                        );
+                      });
+                    })()}
+                  </div>
+                </div>
+
+                {/* Time Slots — fills remaining */}
+                <div className="border-t border-border flex-1 overflow-y-auto px-4 py-3 flex flex-col justify-center">
+                  <p className="text-sm font-semibold text-[#20211F] mb-2">เลือกเวลา</p>
+                  <div className="grid grid-cols-4 gap-3">
+                    {["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"].map((slot) => {
+                      const isSlotSelected = slot === selectedTime;
+                      return (
+                        <button
+                          key={slot}
+                          disabled={!selectedDay}
+                          onClick={() => { setSelectedTime(slot); setSelectedDoctor(null); }}
+                          className={`py-3 rounded-xl text-sm transition-all ${
+                            !selectedDay
+                              ? "border border-gray-200 text-gray-300 cursor-not-allowed"
+                              : isSlotSelected
+                                ? "bg-forest-leaf text-white font-semibold"
+                                : "border border-border hover:border-forest-leaf hover:bg-pale-mint text-olive-charcoal"
+                          }`}
+                        >
+                          {slot}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Next Button */}
+                <div className="p-4 border-t border-warm-sand flex-shrink-0">
+                  <button
+                    disabled={!selectedDay || !selectedTime}
+                    onClick={() => setMobileBookStep("doctor")}
+                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-colors ${
+                      selectedDay && selectedTime
+                        ? "bg-forest-leaf text-white hover:bg-emerald-800"
+                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    เลือกแพทย์
+                  </button>
+                </div>
+              </div>
+
+              {/* Step 2: Doctor */}
+              <div className={`absolute inset-0 flex flex-col transition-transform duration-300 ${
+                mobileBookStep === "doctor" ? "translate-x-0" : mobileBookStep === "calendar" ? "translate-x-full" : "-translate-x-full"
+              }`}>
+                <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                  {doctors.map((doc) => {
+                    const isDocSelected = doc.id === selectedDoctor;
+                    return (
+                      <button
+                        key={doc.id}
+                        onClick={() => setSelectedDoctor(doc.id)}
+                        className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+                          isDocSelected ? "border-forest-leaf bg-pale-mint" : "border-border hover:border-gray-300"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${isDocSelected ? "bg-pale-mint" : "bg-gray-100"}`}>
+                            <Stethoscope className={`w-5 h-5 ${isDocSelected ? "text-forest-leaf" : "text-muted-moss"}`} />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-[#20211F]">{doc.name}</p>
+                            <p className="text-xs text-muted-moss">{doc.specialty}</p>
+                            <div className="flex items-center gap-1 mt-1">
+                              <span className="text-amber-400 text-xs">★</span>
+                              <span className="text-xs text-olive-charcoal">{doc.rating}</span>
+                              <span className="text-xs text-muted-moss">({doc.reviews})</span>
+                            </div>
+                          </div>
+                          {isDocSelected && <Check className="w-5 h-5 text-forest-leaf flex-shrink-0" />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="p-4 border-t border-warm-sand flex-shrink-0">
+                  <button
+                    disabled={!canProceed}
+                    onClick={() => setMobileBookStep("confirm")}
+                    className={`w-full py-3 rounded-xl text-sm font-semibold transition-colors ${
+                      canProceed
+                        ? "bg-forest-leaf text-white hover:bg-emerald-800"
+                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    ต่อไป
+                  </button>
+                </div>
+              </div>
+
+              {/* Step 3: Confirm */}
+              <div className={`absolute inset-0 flex flex-col transition-transform duration-300 ${
+                mobileBookStep === "confirm" ? "translate-x-0" : "translate-x-full"
+              }`}>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  <div className="bg-white rounded-xl border border-border p-4 space-y-4">
+                    <div className="flex items-center gap-3 pb-3 border-b border-warm-sand">
+                      <div className="w-10 h-10 bg-pale-mint rounded-xl flex items-center justify-center">
+                        <Stethoscope className="w-5 h-5 text-forest-leaf" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#20211F] text-sm">{selectedDoctorData?.name}</p>
+                        <p className="text-xs text-muted-moss">{selectedDoctorData?.specialty}</p>
+                      </div>
+                    </div>
+                    {[
+                      { label: "วันที่", value: `${selectedDay} ${months[currentMonth]} ${currentYear + 543}`, icon: CalendarIcon },
+                      { label: "เวลา", value: `${selectedTime} น.`, icon: TimeCircleIcon },
+                      { label: "ประเภท", value: "Video Consultation", icon: VideoIcon },
+                    ].map((row) => {
+                      const Icon = row.icon;
+                      return (
+                        <div key={row.label} className="flex items-center gap-3">
+                          <Icon className="w-4 h-4 text-muted-moss" />
+                          <span className="text-muted-moss text-sm flex-1">{row.label}</span>
+                          <span className="text-[#20211F] text-sm font-medium">{row.value}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <label className="text-sm text-olive-charcoal block mb-1.5">อาการ/เหตุผลในการพบแพทย์</label>
+                    <textarea
+                      rows={3}
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}
+                      placeholder="อธิบายอาการหรือเหตุผลในการนัดหมาย..."
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-gray-50 focus:outline-none focus:ring-2 focus:ring-forest-leaf text-sm resize-none"
+                    />
+                  </div>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                    <p className="text-xs text-amber-800"><strong>โปรดทราบ:</strong> กรุณาเตรียมบัตรประชาชนและพร้อมในระบบก่อนเวลานัดหมาย 5 นาที</p>
+                  </div>
+                </div>
+                <div className="p-4 border-t border-warm-sand flex-shrink-0">
+                  <button
+                    onClick={() => { setMobileBookOpen(false); setStep("done"); }}
+                    className="w-full py-3 bg-forest-leaf text-white rounded-xl text-sm font-semibold hover:bg-emerald-800 transition-colors"
+                  >
+                    ยืนยันนัดหมาย
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {successPopup}
       </>
     );
   }
 
-  // ── Tab: จองนัดใหม่ ───────────────────────────────────────────
+  // ── Tab: จองนัดใหม่ — Month x 24h Grid ─────────────────────
+  const scheduleHours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, "0")}:00`);
+  const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const monthDays = Array.from({ length: daysInCurrentMonth }, (_, i) => i + 1);
+
+  // Mock: slots ที่เต็มแล้ว (day-hour)
+  const fullyBookedSlots = new Set([
+    "3-09:00", "3-10:00", "3-14:00",
+    "5-09:00", "5-10:00", "5-11:00",
+    "10-13:00", "10-14:00",
+    "15-09:00",
+    "20-10:00", "20-11:00", "20-14:00", "20-15:00",
+    "22-09:00", "22-10:00", "22-11:00", "22-13:00", "22-14:00", "22-15:00",
+    "25-10:00",
+    "28-09:00", "28-10:00",
+  ]);
+
+  const isSlotFull = (day: number, hour: string) => fullyBookedSlots.has(`${day}-${hour}`);
+
+  const showDoctorPanel = selectedDay !== null && selectedTime !== null;
+
+  const doctorPanelContent = (
+    <div className="space-y-3">
+      {showDoctorPanel ? (
+        <>
+          {doctors.map((doc) => {
+            const isDocSelected = doc.id === selectedDoctor;
+            return (
+              <button
+                key={doc.id}
+                onClick={() => setSelectedDoctor(doc.id)}
+                className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+                  isDocSelected ? "border-forest-leaf bg-pale-mint" : "border-border hover:border-gray-300"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${isDocSelected ? "bg-pale-mint" : "bg-gray-100"}`}>
+                    <Stethoscope className={`w-5 h-5 ${isDocSelected ? "text-forest-leaf" : "text-muted-moss"}`} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#20211F]">{doc.name}</p>
+                    <p className="text-xs text-muted-moss">{doc.specialty}</p>
+                    <div className="flex items-center gap-1 mt-1">
+                      <span className="text-amber-400 text-xs">★</span>
+                      <span className="text-xs text-olive-charcoal">{doc.rating}</span>
+                      <span className="text-xs text-muted-moss">({doc.reviews})</span>
+                    </div>
+                  </div>
+                  {isDocSelected && <Check className="w-5 h-5 text-forest-leaf flex-shrink-0" />}
+                </div>
+              </button>
+            );
+          })}
+          {canProceed && (
+            <button
+              onClick={() => setStep("confirm")}
+              className="w-full py-3 bg-forest-leaf text-white rounded-xl text-sm font-semibold hover:bg-emerald-800 transition-colors mt-1"
+            >
+              ต่อไป
+            </button>
+          )}
+        </>
+      ) : (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center text-muted-moss">
+            <CalendarIcon className="w-10 h-10 mx-auto mb-3 opacity-30" />
+            <p className="text-sm">กรุณาเลือกวันที่และเวลา</p>
+            <p className="text-sm">เพื่อทำการพบแพทย์</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
-      {/* header with back */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => setTab("my")}
-          className="p-1.5 hover:bg-pale-mint rounded-lg transition-colors"
-        >
+    <div className="-mx-4 lg:-mx-6 -mb-24 flex flex-col" style={{ height: "calc(100vh - 3.5rem)" }}>
+      {/* Header */}
+      <div className="flex items-center gap-3 px-4 lg:px-6 py-3 flex-shrink-0">
+        <button onClick={() => setTab("my")} className="p-1.5 hover:bg-pale-mint rounded-lg transition-colors">
           <ChevronLeft className="w-5 h-5 text-muted-moss" />
         </button>
-        <div>
+        <div className="flex-1">
           <h2 className="text-[#20211F]">จองนัดหมายใหม่</h2>
-          <p className="text-muted-moss text-sm mt-0.5">
-            เลือกแพทย์ วัน และเวลาที่ต้องการ
+          <p className="text-muted-moss text-sm mt-0.5">เลือกวัน เวลา และแพทย์ที่ต้องการ</p>
+        </div>
+        {/* Month nav */}
+        <div className="flex items-center gap-2">
+          <button onClick={() => setCurrentMonth((m) => Math.max(0, m - 1))} className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
+            <ChevronLeft className="w-4 h-4 text-[#20211F]" />
+          </button>
+          <p className="text-sm font-semibold text-[#20211F] min-w-[120px] text-center">
+            {months[currentMonth]} {currentYear + 543}
           </p>
+          <button onClick={() => setCurrentMonth((m) => Math.min(11, m + 1))} className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
+            <ChevronRight className="w-4 h-4 text-[#20211F]" />
+          </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Calendar */}
-        <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h4>
-              {months[currentMonth]} {currentYear + 543}
-            </h4>
-            <div className="flex gap-1">
-              <button
-                onClick={() =>
-                  setCurrentMonth((m) => Math.max(0, m - 1))
-                }
-                className="p-1.5 hover:bg-pale-mint rounded-lg transition-colors"
-              >
-                <ChevronLeft className="w-4 h-4 text-olive-charcoal" />
-              </button>
-              <button
-                onClick={() =>
-                  setCurrentMonth((m) => Math.min(11, m + 1))
-                }
-                className="p-1.5 hover:bg-pale-mint rounded-lg transition-colors"
-              >
-                <ChevronRight className="w-4 h-4 text-olive-charcoal" />
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {daysOfWeek.map((d) => (
+      {/* Schedule Grid */}
+      <div className="flex-1 relative bg-white border-t border-border overflow-auto">
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: `56px repeat(${daysInCurrentMonth}, minmax(72px, 1fr))`,
+            gridTemplateRows: `auto repeat(${scheduleHours.length}, 52px)`,
+          }}
+        >
+          {/* Top-left corner — sticky both */}
+          <div className="sticky top-0 left-0 z-30 bg-white border-b border-r border-border" />
+
+          {/* Day headers — sticky top */}
+          {monthDays.map((day) => {
+            const date = new Date(currentYear, currentMonth, day);
+            const dayName = daysOfWeek[date.getDay()];
+            const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+            const isToday = day === todayDay && currentMonth === 2;
+            const isDaySelected = day === selectedDay;
+            return (
               <div
-                key={d}
-                className="text-center text-xs text-muted-moss py-2 font-medium"
+                key={`h-${day}`}
+                className={`sticky top-0 z-20 border-b border-r border-border text-center py-2.5 cursor-pointer transition-colors ${
+                  isDaySelected ? "bg-forest-leaf/5" : isWeekend ? "bg-gray-50" : "bg-white"
+                }`}
+                onClick={() => { setSelectedDay(day); setSelectedTime(null); setSelectedDoctor(null); }}
               >
-                {d}
-              </div>
-            ))}
-            {calendar.map((day, i) => {
-              const isToday =
-                day === todayDay && currentMonth === 2;
-              const isPast =
-                day !== null &&
-                day < todayDay &&
-                currentMonth === 2;
-              const isSelected = day === selectedDay;
-              return (
-                <button
-                  key={i}
-                  disabled={!day || isPast}
-                  onClick={() => day && setSelectedDay(day)}
-                  className={`text-center text-sm py-2 rounded-xl transition-all
-                    ${!day ? "invisible" : ""}
-                    ${isPast ? "text-muted-moss cursor-not-allowed" : "cursor-pointer"}
-                    ${isSelected ? "bg-forest-leaf text-white font-semibold" : ""}
-                    ${isToday && !isSelected ? "bg-pale-mint text-forest-leaf font-semibold" : ""}
-                    ${!isSelected && !isToday && !isPast ? "hover:bg-pale-mint" : ""}
-                  `}
-                >
+                <p className={`text-[10px] ${isWeekend ? "text-red-400" : "text-muted-moss"}`}>{dayName}</p>
+                <p className={`text-xs font-semibold mt-0.5 w-7 h-7 rounded-full flex items-center justify-center mx-auto ${
+                  isDaySelected
+                    ? "bg-forest-leaf text-white"
+                    : isToday
+                      ? "bg-pale-mint text-forest-leaf"
+                      : "text-[#20211F]"
+                }`}>
                   {day}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Time Slots */}
-        <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="mb-4 text-[#20211F]">เลือกเวลา</h4>
-          {selectedDay ? (
-            <>
-              <p className="text-xs text-muted-moss mb-3">
-                {selectedDay} {months[currentMonth]}{" "}
-                {currentYear + 543}
-              </p>
-              <div className="grid grid-cols-3 gap-2">
-                {timeSlots.map((slot) => {
-                  const isUnavailable =
-                    unavailableSlots.includes(slot);
-                  const isSelected = slot === selectedTime;
-                  return (
-                    <button
-                      key={slot}
-                      disabled={isUnavailable}
-                      onClick={() => setSelectedTime(slot)}
-                      className={`py-2.5 rounded-xl text-sm transition-all
-                        ${isUnavailable ? "bg-muted text-muted-moss cursor-not-allowed line-through" : ""}
-                        ${isSelected ? "bg-forest-leaf text-white font-semibold" : ""}
-                        ${!isUnavailable && !isSelected ? "border border-border hover:border-forest-leaf hover:bg-pale-mint text-olive-charcoal" : ""}
-                      `}
-                    >
-                      {slot}
-                    </button>
-                  );
-                })}
+                </p>
               </div>
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-warm-sand text-xs">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-forest-leaf" />
-                  <span className="text-muted-moss">เลือก</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm border border-border" />
-                  <span className="text-muted-moss">ว่าง</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-sm bg-muted" />
-                  <span className="text-muted-moss">ไม่ว่าง</span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="h-40 flex items-center justify-center">
-              <p className="text-muted-moss text-sm text-center">
-                เลือกวันที่ก่อน
-                <br />
-                เพื่อดูเวลาว่าง
-              </p>
-            </div>
-          )}
-        </div>
+            );
+          })}
 
-        {/* Doctor Selection */}
-        <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
-          <h4 className="mb-4 text-[#20211F]">เลือกแพทย์</h4>
-          <div className="space-y-3">
-            {doctors.map((doc) => {
-              const isSelected = doc.id === selectedDoctor;
-              return (
-                <button
-                  key={doc.id}
-                  onClick={() => setSelectedDoctor(doc.id)}
-                  className={`w-full text-left p-3 rounded-xl border-2 transition-all
-                    ${isSelected ? "border-forest-leaf bg-pale-mint" : "border-border hover:border-gray-300"}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Stethoscope className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-[#20211F]">
-                        {doc.name}
-                      </p>
-                      <p className="text-xs text-muted-moss">
-                        {doc.specialty}
-                      </p>
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="text-amber-400 text-xs">
-                          ★
-                        </span>
-                        <span className="text-xs text-olive-charcoal">
-                          {doc.rating}
-                        </span>
-                        <span className="text-xs text-muted-moss">
-                          ({doc.reviews})
-                        </span>
-                      </div>
-                    </div>
-                    {isSelected && (
-                      <Check className="w-5 h-5 text-forest-leaf flex-shrink-0" />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Summary Bar sticky */}
-      <div
-        className={`sticky bottom-4 rounded-2xl border shadow-lg transition-all overflow-hidden ${canProceed ? "bg-forest-leaf border-forest-leaf shadow-forest-leaf/20" : "bg-white border-border shadow-gray-100"} p-[0px]`}
-      >
-        {/* ── COMPLETE STATE ── */}
-        {canProceed ? (
-          <div className="bg-white p-[4px]">
-            {/* Title */}
-            <p
-              className="font-bold text-[14px] text-[#20211F] mx-[0px] mt-[0px] mb-[8px] px-[12px] pt-[8px] pb-[4px]"
-              style={{
-                fontFamily: "'Google Sans', sans-serif",
-              }}
+          {/* Rows: time label + cells */}
+          {scheduleHours.flatMap((hour) => {
+            const isHourSelected = hour === selectedTime;
+            return [
+            <div
+              key={`t-${hour}`}
+              className={`sticky left-0 z-10 border-b border-r border-border text-[11px] flex items-center justify-center font-medium ${
+                isHourSelected ? "bg-forest-leaf/5 text-forest-leaf" : "bg-white text-muted-moss"
+              }`}
             >
-              การนัดหมาย
-            </p>
-            {/* Inner green card — matches Figma bg-[#226a3b] rounded-[20px] */}
-            <div className="bg-[#226a3b] rounded-[14px] p-3 flex flex-col gap-2 m-[0px]">
-              {/* Row 1: date + time */}
-              <div className="flex items-center gap-2">
-                <div className="border border-white/40 rounded-[12px] px-2 py-2 text-[12px] text-white">
-                  {selectedDay} {months[currentMonth]}{" "}
-                  {currentYear + 543}
-                </div>
-                <div className="border border-white/40 rounded-[12px] px-2 py-2 text-[12px] text-white">
-                  {selectedTime} น.
-                </div>
-              </div>
-              {/* Row 2: doctor + ต่อไป button */}
-              <div className="flex items-center justify-between gap-2">
-                <div className="border border-white/40 rounded-[12px] px-2 py-2 text-[12px] text-white w-fit">
-                  {selectedDoctorData?.name}
-                </div>
-                <button
-                  onClick={() => setStep("confirm")}
-                  className="flex items-center gap-2 bg-[#319754] rounded-[12px] px-3 py-2 text-[12px] text-white flex-shrink-0 hover:bg-[#3aad62] transition-colors"
-                >
-                  <span>ต่อไป</span>
-                  <svg
-                    width="8"
-                    height="13"
-                    viewBox="0 0 12.8388 8.03819"
-                    fill="none"
-                    className="-rotate-90 flex-shrink-0"
-                  >
-                    <path
-                      d="M6.4194 8.03819C6.1893 8.03819 5.95923 7.94169 5.7838 7.7491L0.263377 1.68577C-0.0877925 1.30007 -0.0877925 0.674705 0.263377 0.289155C0.614407 -0.096385 1.18366 -0.096385 1.53486 0.289155L6.4194 5.65434L11.304 0.289345C11.6551 -0.096205 12.2243 -0.096205 12.5753 0.289345C12.9267 0.674895 12.9267 1.30025 12.5753 1.68596L7.05499 7.7493C6.87947 7.94191 6.64941 8.03819 6.41939 8.03819H6.4194Z"
-                      fill="white"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* ── PARTIAL / INCOMPLETE STATE ── */
-          <div className="p-[0px]">
-            {/* Title — เหมือน complete state */}
-            <p className="font-bold text-[14px] text-[#20211F] m-[0px] pl-[12px] pr-[16px] py-[8px]">
-              การนัดหมาย
-            </p>
-            <div className="bg-[#fafafa] rounded-[12px] p-3 flex flex-col gap-2 m-[0px]">
-              {/* Row 1: วันที่ + เวลา */}
-              <div className="flex items-center gap-2">
-                {/* Date chip */}
+              {hour}
+            </div>,
+            ...monthDays.map((day) => {
+              const isFull = isSlotFull(day, hour);
+              const isCellSelected = day === selectedDay && hour === selectedTime;
+              const isPast = currentMonth === 2 && day < todayDay;
+              const date = new Date(currentYear, currentMonth, day);
+              const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+              const isDaySelected = day === selectedDay;
+              const isDisabled = isPast || isFull;
+              return (
                 <div
-                  className={`flex items-center gap-1.5 px-2 py-2 rounded-[12px] border text-[12px] transition-all
-                  ${
-                    selectedDay
-                      ? "border-[#226a3b] text-[#226a3b]"
-                      : "border-[#d4d4d4] text-[#666]"
+                  key={`${day}-${hour}`}
+                  className={`border-b border-r border-border transition-colors relative ${
+                    isDisabled
+                      ? "cursor-not-allowed"
+                      : "cursor-pointer"
+                  } ${
+                    isCellSelected && !isFull
+                      ? "bg-forest-leaf/15 ring-2 ring-inset ring-forest-leaf/60"
+                      : isFull
+                        ? "bg-red-50/60"
+                        : isPast
+                          ? "bg-gray-100/60"
+                          : isDaySelected && isHourSelected
+                            ? "bg-forest-leaf/[0.06]"
+                            : isDaySelected
+                              ? "bg-forest-leaf/[0.03]"
+                              : isHourSelected
+                                ? "bg-forest-leaf/[0.03]"
+                                : isWeekend
+                                  ? "bg-gray-50/50 hover:bg-pale-mint/30"
+                                  : "hover:bg-pale-mint/30"
                   }`}
+                  onClick={() => {
+                    if (isDisabled) return;
+                    if (day === selectedDay && hour === selectedTime) {
+                      setSelectedTime(null);
+                      setSelectedDoctor(null);
+                      return;
+                    }
+                    setSelectedDay(day);
+                    setSelectedTime(hour);
+                    setSelectedDoctor(null);
+                  }}
                 >
-                  {selectedDay
-                    ? `${selectedDay} ${months[currentMonth]} ${currentYear + 543}`
-                    : "เลือกวันที่"}
+                  {isFull && (
+                    <span className="absolute inset-0 flex items-center justify-center text-[9px] text-red-400 font-medium">เต็ม</span>
+                  )}
                 </div>
-                {/* Time chip */}
-                <div
-                  className={`flex items-center gap-1.5 px-2 py-2 rounded-[12px] border text-[12px] transition-all
-                  ${
-                    selectedTime
-                      ? "border-[#226a3b] text-[#226a3b]"
-                      : "border-[#d4d4d4] text-[#666]"
-                  }`}
-                >
-                  {selectedTime
-                    ? `${selectedTime} น.`
-                    : "เลือกเวลา"}
-                </div>
-              </div>
+              );
+            }),
+          ];})}
+        </div>
 
-              {/* Row 2: แพทย์ + ปุ่มต่อไป */}
-              <div className="flex items-center justify-between gap-2">
-                {/* Doctor chip */}
-                <div
-                  className={`flex items-center gap-1.5 px-2 py-2 rounded-[12px] border text-[12px] transition-all w-fit
-                  ${
-                    selectedDoctorData
-                      ? "border-[#226a3b] text-[#226a3b]"
-                      : "border-[#d4d4d4] text-[#666]"
-                  }`}
-                >
-                  {selectedDoctorData
-                    ? selectedDoctorData.name
-                    : "เลือกแพทย์"}
-                </div>
-
-                {/* ต่อไป button — always disabled in partial state */}
+        {/* Floating Doctor Panel — desktop, show when day+time selected */}
+        {showDoctorPanel && <div className="hidden lg:flex flex-col fixed top-[9.5rem] right-10 w-72 z-20 bg-white rounded-2xl border border-border shadow-xl max-h-[calc(100vh-12rem)] overflow-hidden">
+          <div className="px-4 py-3 border-b border-warm-sand flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-semibold text-[#20211F]">เลือกแพทย์</h4>
+              {showDoctorPanel && (
                 <button
-                  disabled
-                  className="flex items-center gap-2 bg-[#d4d4d4] text-[#666] px-3 py-2 rounded-[12px] text-[12px] cursor-not-allowed flex-shrink-0"
+                  onClick={() => { setSelectedTime(null); setSelectedDoctor(null); }}
+                  className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
                 >
-                  <span>ต่อไป</span>
-                  <svg
-                    width="8"
-                    height="13"
-                    viewBox="0 0 12.8388 8.03819"
-                    fill="none"
-                    className="-rotate-90 flex-shrink-0"
-                  >
-                    <path
-                      d="M6.4194 8.03819C6.1893 8.03819 5.95923 7.94169 5.7838 7.7491L0.263377 1.68577C-0.0877925 1.30007 -0.0877925 0.674705 0.263377 0.289155C0.614407 -0.096385 1.18366 -0.096385 1.53486 0.289155L6.4194 5.65434L11.304 0.289345C11.6551 -0.096205 12.2243 -0.096205 12.5753 0.289345C12.9267 0.674895 12.9267 1.30025 12.5753 1.68596L7.05499 7.7493C6.87947 7.94191 6.64941 8.03819 6.41939 8.03819H6.4194Z"
-                      fill="#666"
-                    />
-                  </svg>
+                  <span className="text-xs text-[#20211F] leading-none">✕</span>
                 </button>
-              </div>
+              )}
             </div>
+            {showDoctorPanel && (
+              <p className="text-xs text-muted-moss mt-1">
+                {selectedDay} {months[currentMonth]} {currentYear + 543} • {selectedTime} น.
+              </p>
+            )}
           </div>
-        )}
+          <div className="flex-1 overflow-y-auto p-4">
+            {doctorPanelContent}
+          </div>
+        </div>}
       </div>
+
+      {/* Mobile: Doctor Bottom Sheet */}
+      {showDoctorPanel && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end"
+          onClick={() => { setSelectedTime(null); setSelectedDoctor(null); }}
+        >
+          <div
+            className="bg-white rounded-t-3xl w-full max-h-[70vh] overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative px-5 pt-4 pb-3 border-b border-warm-sand flex-shrink-0">
+              <div className="w-10 h-1 bg-gray-300 rounded-full mx-auto mb-3" />
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-[#20211F] text-base font-semibold">เลือกแพทย์</h3>
+                  <p className="text-xs text-muted-moss mt-1">
+                    {selectedDay} {months[currentMonth]} {currentYear + 543} • {selectedTime} น.
+                  </p>
+                </div>
+                <button
+                  onClick={() => { setSelectedTime(null); setSelectedDoctor(null); }}
+                  className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"
+                >
+                  <span className="text-sm text-[#20211F] leading-none">✕</span>
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              {doctorPanelContent}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {successPopup}
     </div>
   );
 }

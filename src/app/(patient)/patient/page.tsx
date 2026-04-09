@@ -5,19 +5,16 @@ import { useRouter } from "next/navigation";
 import {
   ChevronRight,
   ChevronLeft,
-  CheckCircle2,
-  AlertCircle,
   TrendingUp,
-  Heart,
 } from "lucide-react";
 import { TimeCircleIcon } from "../../components/TimeCircleIcon";
 import { VideoIcon } from "../../components/VideoIcon";
 import { CalendarIcon } from "../../components/CalendarIcon";
 import { NotificationIcon } from "../../components/NotificationIcon";
 import { PaperIcon } from "../../components/PaperIcon";
+import { PillIcon } from "../../components/PillIcon";
 import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 import { HeartIcon } from "../../components/HeartIcon";
-import { PillIcon } from "../../components/PillIcon";
 
 const avatarFemale = "/images/avatar-female.png";
 const avatarMale = "/images/avatar-male.png";
@@ -143,7 +140,7 @@ function isSameDay(a: Date, b: Date) {
 
 export default function Page() {
   const router = useRouter();
-  const [selectedDate, setSelectedDate] = useState(new Date(2026, 2, 3)); // 3 มี.ค. 2569
+  const [selectedDate, setSelectedDate] = useState(new Date(2026, 2, 3));
 
   const weekDates = getWeekDates(selectedDate);
   const today = new Date(2026, 2, 3);
@@ -157,6 +154,60 @@ export default function Page() {
       return d;
     });
   };
+
+  const notifListContent = (
+    <>
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="text-sm font-semibold text-[#20211F]">การแจ้งเตือน</h4>
+        {dayNotifs.length > 0 && (
+          <span className="text-xs text-muted-moss">{dayNotifs.length} รายการ</span>
+        )}
+      </div>
+      {dayNotifs.length > 0 ? (
+        <div className="space-y-2.5">
+          {dayNotifs.map((n) => {
+            const config = notifCategoryConfig[n.category];
+            const Icon = config.icon;
+            return (
+              <div key={n.id} className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                {n.category === "appointment" && n.doctor ? (
+                  <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-gray-100">
+                    <img
+                      src={n.gender === "female" ? doctorFemale : doctorMale}
+                      alt="doctor"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${config.color}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-[#20211F] truncate">
+                    {n.category === "appointment" && n.doctor ? n.doctor : n.title}
+                  </p>
+                  <p className="text-xs text-muted-moss mt-0.5 truncate">{n.desc}</p>
+                  <div className="flex items-center gap-1 text-[10px] text-olive-charcoal mt-1">
+                    <TimeCircleIcon className="w-3 h-3" />
+                    {n.time}
+                  </div>
+                </div>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${config.badgeColor}`}>
+                  {n.title}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-8 text-muted-moss">
+          <NotificationIcon className="w-8 h-8 mx-auto mb-2 opacity-30" />
+          <p className="text-sm">ไม่มีการแจ้งเตือนในวันนี้</p>
+        </div>
+      )}
+    </>
+  );
 
   return (
     <div className="space-y-6">
@@ -198,8 +249,9 @@ export default function Page() {
         </div>
       </div>
 
+      {/* Two-column layout */}
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* Left Column — wider */}
+        {/* Left Column */}
         <div className="flex-1 min-w-0 space-y-6">
           {/* Upcoming Appointments */}
           <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
@@ -282,11 +334,11 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Right Column — calendar & notifications, sticky full-height */}
-        <div className="w-full lg:w-80 flex-shrink-0">
-          <div className="lg:sticky lg:top-0 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
+        {/* Right Column — Calendar & Notifications Card (desktop only) */}
+        <div className="hidden lg:block w-80 flex-shrink-0">
+          <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden sticky top-0 h-[calc(100vh-20rem)] flex flex-col">
             {/* Calendar Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-warm-sand">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-warm-sand">
               <button onClick={() => shiftWeek(-1)} className="p-1 rounded-lg hover:bg-gray-100 transition-colors">
                 <ChevronLeft className="w-4 h-4 text-[#20211F]" />
               </button>
@@ -318,7 +370,7 @@ export default function Page() {
                   <button
                     key={d.toISOString()}
                     onClick={() => setSelectedDate(new Date(d))}
-                    className={`flex flex-col items-center py-2 rounded-xl transition-colors relative ${
+                    className={`flex flex-col items-center py-2 rounded-xl transition-colors ${
                       isSelected
                         ? "bg-forest-leaf text-white"
                         : isToday
@@ -336,59 +388,9 @@ export default function Page() {
               })}
             </div>
 
-            {/* Notification List for Selected Date */}
+            {/* Notification List */}
             <div className="px-4 py-3 flex-1 overflow-y-auto">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-semibold text-[#20211F]">การแจ้งเตือน</h4>
-                {dayNotifs.length > 0 && (
-                  <span className="text-xs text-muted-moss">{dayNotifs.length} รายการ</span>
-                )}
-              </div>
-              {dayNotifs.length > 0 ? (
-                <div className="space-y-2.5">
-                  {dayNotifs.map((n) => {
-                    const config = notifCategoryConfig[n.category];
-                    const Icon = config.icon;
-                    return (
-                      <div key={n.id} className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition-colors">
-                        {n.category === "appointment" && n.doctor ? (
-                          <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-gray-100">
-                            <img
-                              src={n.gender === "female" ? doctorFemale : doctorMale}
-                              alt="doctor"
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${config.color}`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <p className="text-sm font-medium text-[#20211F] truncate">
-                              {n.category === "appointment" && n.doctor ? n.doctor : n.title}
-                            </p>
-                          </div>
-                          <p className="text-xs text-muted-moss mt-0.5 truncate">{n.desc}</p>
-                          <div className="flex items-center gap-1 text-[10px] text-olive-charcoal mt-1">
-                            <TimeCircleIcon className="w-3 h-3" />
-                            {n.time}
-                          </div>
-                        </div>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${config.badgeColor}`}>
-                          {n.title}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-moss">
-                  <NotificationIcon className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                  <p className="text-sm">ไม่มีการแจ้งเตือนในวันนี้</p>
-                </div>
-              )}
+              {notifListContent}
             </div>
           </div>
         </div>
