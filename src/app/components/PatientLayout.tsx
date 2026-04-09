@@ -21,9 +21,10 @@ import { PillIcon } from "./PillIcon";
 import { ShieldDoneIcon } from "./ShieldDoneIcon";
 import { ProfileIcon } from "./ProfileIcon";
 import { useState } from "react";
+import { basePath } from "../lib/basePath";
 
-const doctorMale = "/images/doctor-male.png";
-const doctorFemale = "/images/doctor-female.png";
+const doctorMale = `${basePath}/images/doctor-male.png`;
+const doctorFemale = `${basePath}/images/doctor-female.png`;
 
 type NotifItem = {
   id: number;

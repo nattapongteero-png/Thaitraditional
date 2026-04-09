@@ -15,11 +15,12 @@ import { PaperIcon } from "../../components/PaperIcon";
 import { PillIcon } from "../../components/PillIcon";
 import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 import { HeartIcon } from "../../components/HeartIcon";
+import { basePath } from "../../lib/basePath";
 
-const avatarFemale = "/images/avatar-female.png";
-const avatarMale = "/images/avatar-male.png";
-const doctorMale = "/images/doctor-male.png";
-const doctorFemale = "/images/doctor-female.png";
+const avatarFemale = `${basePath}/images/avatar-female.png`;
+const avatarMale = `${basePath}/images/avatar-male.png`;
+const doctorMale = `${basePath}/images/doctor-male.png`;
+const doctorFemale = `${basePath}/images/doctor-female.png`;
 
 const mockUser = {
   name: "นางสาว สมใจ รักสุขภาพ",

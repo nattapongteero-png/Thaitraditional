@@ -16,9 +16,10 @@ import {
 import { VideoIcon } from "../../components/VideoIcon";
 import { CalendarIcon } from "../../components/CalendarIcon";
 import { TimeCircleIcon } from "../../components/TimeCircleIcon";
+import { basePath } from "../../lib/basePath";
 
-const patientFemale = "/images/avatar-female.png";
-const patientMale = "/images/avatar-male.png";
+const patientFemale = `${basePath}/images/avatar-female.png`;
+const patientMale = `${basePath}/images/avatar-male.png`;
 
 type Status = "waiting" | "in_progress" | "done" | "no_show" | "rescheduled";
 

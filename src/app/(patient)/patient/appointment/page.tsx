@@ -17,9 +17,10 @@ import { VideoIcon } from "../../../components/VideoIcon";
 import { CalendarIcon } from "../../../components/CalendarIcon";
 import { TimeCircleIcon } from "../../../components/TimeCircleIcon";
 import { ImageWithFallback } from "../../../components/figma/ImageWithFallback";
+import { basePath } from "../../../lib/basePath";
 
-const avatarDoctorMale = "/images/doctor-male.png";
-const avatarDoctorFemale = "/images/doctor-female.png";
+const avatarDoctorMale = `${basePath}/images/doctor-male.png`;
+const avatarDoctorFemale = `${basePath}/images/doctor-female.png`;
 
 const doctors = [
   {
